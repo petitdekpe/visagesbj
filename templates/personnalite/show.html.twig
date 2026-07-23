@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/personnalite.html.twig' as m %}
+
+{% block title %}{{ personnalite.fullName }} — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}{{ personnalite.role ?? (personnalite.fullName ~ ' — l\'une des 66 personnalités béninoises de la campagne Hisse ton Drapeau.') }}{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="{{ path('app_personnalites_index') }}">66 visages</a> / {{ personnalite.fullName }}
+            </p>
+            <h1 class="section-title">{{ personnalite.fullName }}</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section detail">
+            <div class="detail__photo">
+                {{ m.avatar(personnalite) }}
+            </div>
+
+            <div>
+                <span class="detail__name-first">{{ personnalite.firstName }}</span>
+                <span class="detail__name-last">{{ personnalite.lastName }}</span>
+
+                {% if personnalite.role %}
+                    <p class="detail__role">{{ personnalite.role }}</p>
+                {% endif %}
+
+                <div class="detail__bio">
+                    <p>
+                        {{ personnalite.firstName|default(personnalite.lastName) }} fait partie des 66 visages
+                        mis à l'honneur par la campagne Hisse ton Drapeau, à l'occasion du 66<sup>e</sup>
+                        anniversaire de l'indépendance du Bénin.
+                    </p>
+                </div>
+
+                <a href="{{ path('app_personnalites_index') }}" class="back-link">&larr; Retour aux 66 visages</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}

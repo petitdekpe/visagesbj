@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/personnalite.html.twig' as m %}
+
+{% block title %}Hisse ton Drapeau — 66 visages du Bénin{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="hero" aria-label="Hisse ton Drapeau — édition 2026">
+            <div class="hero__panel">
+                {# 15 slots per row: the 11 faces plus an empty gutter after columns 2, 5, 6 and 9. #}
+                {% set hero_pattern = [0, 1, 'gap', 2, 3, 4, 'gap', 5, 'gap', 6, 7, 8, 'gap', 9, 10] %}
+                <div class="hero__grid" aria-hidden="true">
+                    {% for row in heroFaces|batch(11, preserve_keys=false) %}
+                        <div class="hero__row">
+                            {% for slot in hero_pattern %}
+                                {% if slot == 'gap' or row[slot] is not defined %}
+                                    <span class="hero__gap"></span>
+                                {% else %}
+                                    <span class="hero__tile">{{ m.avatar(row[slot]) }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if loop.index == 3 %}
+                            {# Empty row between rows 3 and 4. #}
+                            <div class="hero__row">
+                                {% for slot in hero_pattern %}<span class="hero__gap"></span>{% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="hero__lockup">
+                    <span class="hero__meta-label">66 visages</span>
+                    <img src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau">
+                    <span class="hero__meta-year">2026</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Hisse ton drapeau,<br>c'est quoi ?</h1>
+            </div>
+            <div class="section-lede">
+                <p>
+                    « Hisse ton Drapeau » est la campagne portée par le Ministère de la Culture, des Arts
+                    et du Patrimoine à l'occasion du 66<sup>e</sup> anniversaire de l'indépendance du Bénin.
+                    Du 12 juillet au 3 août, elle invite chaque béninois·e à hisser un drapeau sur sa
+                    maison, son véhicule ou son bureau, en signe de fierté nationale.
+                </p>
+            </div>
+            <div class="section-lede">
+                <p>
+                    La campagne s'articule autour de quatre piliers : une identité sonore commune à tous
+                    les contenus, deux challenges TikTok (le Beat Challenge et #MontreTaCommune), un film
+                    sur la mémoire de l'indépendance, et un déploiement institutionnel et territorial de
+                    66 visages qui incarnent la réussite et la fierté du Bénin.
+                </p>
+            </div>
+            <div class="section-lede">
+                <p>
+                    « Le plus beau chapitre d'un pays, c'est celui qui reste à écrire. » Découvrez ici les
+                    personnalités qui portent cette édition 2026.
+                </p>
+            </div>
+        </section>
+
+        <section class="section section--alt">
+            <div class="section-intro">
+                <div class="section-heading">
+                    <span class="section-heading__bar" aria-hidden="true"></span>
+                    <h2 class="section-title">66 personnalités béninoises<br>influentes</h2>
+                </div>
+            </div>
+            <div class="section-lede">
+                <p>
+                    Une campagne d'affichage à Cotonou et à l'intérieur du pays met à l'honneur 66
+                    personnalités qui incarnent la réussite et la fierté du Bénin — artistes, sportifs,
+                    entrepreneurs, chercheurs et figures publiques.
+                </p>
+            </div>
+
+            <div class="personnalites-grid personnalites-grid--featured">
+                {% for personnalite in featured %}
+                    {{ m.card(personnalite) }}
+                {% endfor %}
+            </div>
+
+            <div class="section-footer">
+                <a href="{{ path('app_personnalites_index') }}" class="btn btn--primary">Voir tout &rarr;</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}

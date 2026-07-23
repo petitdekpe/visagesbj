@@ -1,0 +1,39 @@
+<footer class="site-footer">
+    <div class="container site-footer__inner">
+        <div class="site-footer__brand">
+            <img src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau" width="180" height="81">
+            <p>#HisseTonDrapeau — 66 ans d'indépendance, 66 visages qui font la fierté du Bénin.</p>
+        </div>
+
+        <div class="site-footer__col">
+            <h2>Rubriques</h2>
+            <ul>
+                <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li><a href="{{ path('app_personnalites_index') }}">66 visages</a></li>
+                <li><a href="{{ path('app_about') }}">À propos</a></li>
+                <li><a href="{{ path('app_contact') }}">Contacts</a></li>
+            </ul>
+        </div>
+
+        <div class="site-footer__col">
+            <h2>Contacts</h2>
+            <ul class="site-footer__contacts">
+                <li><span>E-mail</span><em>à renseigner</em></li>
+                <li><span>Téléphone</span><em>à renseigner</em></li>
+                <li><span>Adresse</span><em>à renseigner</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="site-footer__bottom">
+        <div class="container site-footer__bottom-inner">
+            <p>&copy; {{ "now"|date("Y") }} Hisse ton Drapeau. Tous droits réservés.</p>
+            <ul>
+                <li><a href="#">Politique de confidentialité</a></li>
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Conditions générales d'utilisation</a></li>
+                <li><a href="#">Gestion des cookies</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

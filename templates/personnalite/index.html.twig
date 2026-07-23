@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/personnalite.html.twig' as m %}
+
+{% block title %}66 visages du Bénin — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Découvrez les personnalités béninoises qui incarnent la réussite et la fierté du Bénin dans le cadre de la campagne Hisse ton Drapeau.{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <h1 class="section-title">66 visages du Bénin</h1>
+            <p>
+                {{ personnalites|length }} personnalités qui incarnent la réussite et la fierté du Bénin,
+                à l'occasion du 66<sup>e</sup> anniversaire de son indépendance.
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <div class="personnalites-grid">
+                {% for personnalite in personnalites %}
+                    {{ m.card(personnalite) }}
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

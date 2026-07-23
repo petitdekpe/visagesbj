@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin — {{ personnalite.id ? 'Modifier ' ~ personnalite.fullName : 'Ajouter une personnalité' }}{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section admin-form-section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">{{ personnalite.id ? 'Modifier' : 'Ajouter' }}</h1>
+            </div>
+
+            {% if personnalite.photo %}
+                <p class="admin-current-photo">
+                    <img src="{{ asset('images/personnalites/' ~ personnalite.photo) }}" alt="{{ personnalite.fullName }}">
+                </p>
+            {% endif %}
+
+            {{ form_start(form, { attr: { class: 'admin-form', novalidate: 'novalidate' } }) }}
+                <div class="admin-form__field">
+                    {{ form_label(form.firstName) }}
+                    {{ form_widget(form.firstName) }}
+                    {{ form_help(form.firstName) }}
+                    {{ form_errors(form.firstName) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.lastName) }}
+                    {{ form_widget(form.lastName) }}
+                    {{ form_errors(form.lastName) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.role) }}
+                    {{ form_widget(form.role) }}
+                    {{ form_errors(form.role) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.position) }}
+                    {{ form_widget(form.position) }}
+                    {{ form_errors(form.position) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.photoFile) }}
+                    {{ form_widget(form.photoFile) }}
+                    {{ form_help(form.photoFile) }}
+                    {{ form_errors(form.photoFile) }}
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Enregistrer</button>
+                    <a href="{{ path('admin_personnalites_index') }}" class="back-link">Annuler</a>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion admin — Hisse ton Drapeau{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="section admin-login">
+            <div class="admin-login__card">
+                <h1 class="section-title">Connexion</h1>
+
+                {% if error %}
+                    <p class="admin-alert admin-alert--error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+                {% endif %}
+
+                <form method="post" class="admin-form">
+                    <div class="admin-form__field">
+                        <label for="username">Identifiant</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+                    </div>
+
+                    <div class="admin-form__field">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="_password" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <button type="submit" class="btn btn--primary">Se connecter</button>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}

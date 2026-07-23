@@ -1,0 +1,30 @@
+{% macro avatar(personnalite) %}
+    {% if personnalite.photo %}
+        <img class="avatar-photo" src="{{ asset('images/personnalites/' ~ personnalite.photo) }}" alt="{{ personnalite.fullName }}" loading="lazy">
+    {% else %}
+        <span class="avatar-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="8" r="4" fill="currentColor"/>
+                <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/>
+            </svg>
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro card(personnalite) %}
+    {% import _self as personnalite_macros %}
+    <article class="personnalite-card">
+        <a href="{{ path('app_personnalites_show', { slug: personnalite.slug }) }}" class="personnalite-card__link">
+            <span class="personnalite-card__photo">
+                {{ personnalite_macros.avatar(personnalite) }}
+            </span>
+            <span class="personnalite-card__name">
+                {% if personnalite.firstName %}<span class="personnalite-card__firstname">{{ personnalite.firstName }}</span>{% endif %}
+                <span class="personnalite-card__lastname">{{ personnalite.lastName }}</span>
+            </span>
+            {% if personnalite.role %}
+                <span class="personnalite-card__role">{{ personnalite.role }}</span>
+            {% endif %}
+        </a>
+    </article>
+{% endmacro %}

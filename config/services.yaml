@@ -21,3 +21,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Security\EnvAdminUserProvider:
+        arguments:
+            $adminUsername: '%env(ADMIN_USERNAME)%'
+            $adminPasswordHash: '%env(ADMIN_PASSWORD_HASH)%'
+
+    App\Service\PersonnalitePhotoUploader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/images/personnalites'

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/personnalite.html.twig' as m %}
+
+{% block title %}Admin — Personnalités{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Personnalités ({{ personnalites|length }})</h1>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Rôle</th>
+                            <th>Position</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for personnalite in personnalites %}
+                            <tr>
+                                <td class="admin-table__photo">
+                                    <span class="admin-avatar">{{ m.avatar(personnalite) }}</span>
+                                </td>
+                                <td>{{ personnalite.fullName }}</td>
+                                <td class="admin-table__role">{{ personnalite.role|default('—') }}</td>
+                                <td>{{ personnalite.position }}</td>
+                                <td class="admin-table__actions">
+                                    <a href="{{ path('admin_personnalites_edit', { id: personnalite.id }) }}">Modifier</a>
+                                    <form method="post" action="{{ path('admin_personnalites_delete', { id: personnalite.id }) }}"
+                                          data-controller="confirm" data-action="submit->confirm#check"
+                                          data-confirm-message-value="Supprimer {{ personnalite.fullName }} ?">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-personnalite-' ~ personnalite.id) }}">
+                                        <button type="submit" class="admin-table__delete">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<header class="site-header" data-controller="nav">
+    <div class="container site-header__inner">
+        <a href="{{ path('app_home') }}" class="site-header__brand">
+            <img src="{{ asset('images/branding/htd_noir.png') }}" alt="Hisse ton Drapeau" width="160" height="72">
+        </a>
+
+        <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+            <span class="sr-only">Ouvrir le menu</span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+            <ul>
+                <li><a href="{{ path('app_home') }}" class="{{ app.current_route == 'app_home' ? 'is-active' }}">Accueil</a></li>
+                <li><a href="{{ path('app_personnalites_index') }}" class="{{ app.current_route starts with 'app_personnalites' ? 'is-active' }}">66 visages</a></li>
+                <li><a href="{{ path('app_about') }}" class="{{ app.current_route == 'app_about' ? 'is-active' }}">À propos</a></li>
+                <li><a href="{{ path('app_contact') }}" class="{{ app.current_route == 'app_contact' ? 'is-active' }}">Contacts</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin_personnalites_index') }}" class="{{ app.current_route starts with 'admin_' ? 'is-active' }}">Admin</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
