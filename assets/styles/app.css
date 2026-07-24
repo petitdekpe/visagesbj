@@ -1107,6 +1107,20 @@ p {
     right: 20px;
     bottom: 20px;
     z-index: 200;
+    width: 172px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.audio-consent__cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
 }
 
 .audio-consent__btn {
@@ -1172,6 +1186,8 @@ p {
     .audio-consent {
         right: 14px;
         bottom: 14px;
+        width: 156px;
+        gap: 8px;
     }
 
     .audio-consent__btn {
