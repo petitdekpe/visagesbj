@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class PersonnalitePhotoUploader
@@ -12,13 +12,17 @@ class PersonnalitePhotoUploader
     ) {
     }
 
-    public function upload(UploadedFile $file, string $baseName): string
+    /**
+     * Accepts any File — an UploadedFile from an HTTP form, or a plain File
+     * built from a path on disk (bulk CLI import) — same processing either way.
+     */
+    public function upload(File $file, string $baseName): string
     {
         $mimeType = $file->getMimeType();
 
         $slugger = new AsciiSlugger();
         $safeName = strtolower((string) $slugger->slug($baseName));
-        $extension = $file->guessExtension() ?: $file->getClientOriginalExtension();
+        $extension = $file->guessExtension() ?: $file->getExtension();
         $filename = sprintf('%s-%s.%s', $safeName, bin2hex(random_bytes(4)), $extension);
 
         $file->move($this->targetDirectory, $filename);

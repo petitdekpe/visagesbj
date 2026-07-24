@@ -39,6 +39,13 @@
                 </div>
 
                 <div class="admin-form__field">
+                    {{ form_label(form.bio) }}
+                    {{ form_widget(form.bio) }}
+                    {{ form_help(form.bio) }}
+                    {{ form_errors(form.bio) }}
+                </div>
+
+                <div class="admin-form__field">
                     {{ form_label(form.position) }}
                     {{ form_widget(form.position) }}
                     {{ form_errors(form.position) }}

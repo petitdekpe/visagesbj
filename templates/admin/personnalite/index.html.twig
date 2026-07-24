@@ -13,12 +13,22 @@
                 <h1 class="section-title">Personnalités ({{ personnalites|length }})</h1>
             </div>
 
+            <p class="admin-hint">
+                Pour ajouter des photos en masse : dépose des fichiers nommés
+                <code>{slug}.jpg</code> (ou .png/.webp — le slug de chacun·e est dans
+                la colonne <strong>Fichier attendu</strong> ci-dessous) dans
+                <code>var/photos-import/</code>, puis lance
+                <code>php bin/console app:personnalites:photos:import</code>
+                (ajoute <code>--dry-run</code> pour prévisualiser sans rien modifier).
+            </p>
+
             <div class="admin-table-wrap">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th></th>
                             <th>Nom</th>
+                            <th>Fichier attendu</th>
                             <th>Rôle</th>
                             <th>Position</th>
                             <th></th>
@@ -31,6 +41,7 @@
                                     <span class="admin-avatar">{{ m.avatar(personnalite) }}</span>
                                 </td>
                                 <td>{{ personnalite.fullName }}</td>
+                                <td><code>{{ personnalite.slug }}.jpg</code></td>
                                 <td class="admin-table__role">{{ personnalite.role|default('—') }}</td>
                                 <td>{{ personnalite.position }}</td>
                                 <td class="admin-table__actions">

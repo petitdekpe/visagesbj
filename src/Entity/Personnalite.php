@@ -28,6 +28,9 @@ class Personnalite
     #[Assert\Length(max: 255)]
     private ?string $role = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $bio = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
@@ -79,6 +82,18 @@ class Personnalite
     public function setRole(?string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): static
+    {
+        $this->bio = $bio;
 
         return $this;
     }

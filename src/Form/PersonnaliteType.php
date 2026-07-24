@@ -27,9 +27,18 @@ class PersonnaliteType extends AbstractType
                 'required' => true,
             ])
             ->add('role', TextareaType::class, [
-                'label' => 'Rôle / bio courte',
+                'label' => 'Rôle (résumé court, affiché sur les cartes et la grille)',
                 'required' => false,
-                'attr' => ['rows' => 3],
+                'attr' => ['rows' => 2],
+            ])
+            ->add('bio', TextareaType::class, [
+                'label' => 'Biographie (page détail de la personnalité)',
+                'required' => false,
+                'attr' => ['rows' => 8],
+                'help' => 'Un paragraphe par ligne vide. Pour la mise en emphase : '
+                    .'<code>&lt;strong&gt;texte&lt;/strong&gt;</code> = jaune, '
+                    .'<code>&lt;em&gt;texte&lt;/em&gt;</code> = blanc gras.',
+                'help_html' => true,
             ])
             ->add('position', IntegerType::class, [
                 'label' => 'Position (ordre d\'affichage, plus petit = affiché en premier)',

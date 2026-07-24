@@ -5,39 +5,37 @@
 {% block meta_description %}{{ personnalite.role ?? (personnalite.fullName ~ ' — l\'une des 66 personnalités béninoises de la campagne Hisse ton Drapeau.') }}{% endblock %}
 
 {% block body %}
-    <header class="page-header">
-        <div class="container">
-            <p class="breadcrumb">
-                <a href="{{ path('app_personnalites_index') }}">66 visages</a> / {{ personnalite.fullName }}
-            </p>
-            <h1 class="section-title">{{ personnalite.fullName }}</h1>
-        </div>
-    </header>
+    <article class="profile-hero">
+        <div class="profile-hero__info">
+            <div class="profile-hero__info-inner">
+                <a href="{{ path('app_personnalites_index') }}" class="profile-hero__back">&larr; 66 visages</a>
 
-    <div class="container">
-        <section class="section detail">
-            <div class="detail__photo">
-                {{ m.avatar(personnalite) }}
-            </div>
+                <h1 class="profile-hero__name">
+                    {% if personnalite.firstName %}<span>{{ personnalite.firstName }}</span>{% endif %}
+                    <span>{{ personnalite.lastName }}</span>
+                </h1>
 
-            <div>
-                <span class="detail__name-first">{{ personnalite.firstName }}</span>
-                <span class="detail__name-last">{{ personnalite.lastName }}</span>
-
-                {% if personnalite.role %}
-                    <p class="detail__role">{{ personnalite.role }}</p>
+                {% if personnalite.bio %}
+                    <div class="profile-hero__bio">
+                        {% set paragraphs = personnalite.bio|replace({'\r\n': '\n', '\r': '\n'})|split('\n\n') %}
+                        {% for paragraph in paragraphs %}
+                            {% if paragraph|trim is not empty %}
+                                <p>{{ paragraph|trim|raw }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% elseif personnalite.role %}
+                    <div class="profile-hero__bio">
+                        <p>{{ personnalite.role }}</p>
+                    </div>
                 {% endif %}
 
-                <div class="detail__bio">
-                    <p>
-                        {{ personnalite.firstName|default(personnalite.lastName) }} fait partie des 66 visages
-                        mis à l'honneur par la campagne Hisse ton Drapeau, à l'occasion du 66<sup>e</sup>
-                        anniversaire de l'indépendance du Bénin.
-                    </p>
-                </div>
-
-                <a href="{{ path('app_personnalites_index') }}" class="back-link">&larr; Retour aux 66 visages</a>
+                <img class="profile-hero__logo" src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau">
             </div>
-        </section>
-    </div>
+        </div>
+
+        <div class="profile-hero__photo">
+            {{ m.avatar(personnalite) }}
+        </div>
+    </article>
 {% endblock %}

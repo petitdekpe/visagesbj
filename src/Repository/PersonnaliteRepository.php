@@ -45,4 +45,13 @@ class PersonnaliteRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['slug' => $slug]);
     }
+
+    public function countWithoutPhoto(): int
+    {
+        return (int) $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.photo IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

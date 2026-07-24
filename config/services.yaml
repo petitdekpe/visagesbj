@@ -35,3 +35,7 @@ services:
     App\Service\PersonnalitePhotoUploader:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/images/personnalites'
+
+    App\Command\ImportPersonnalitesPhotosCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
