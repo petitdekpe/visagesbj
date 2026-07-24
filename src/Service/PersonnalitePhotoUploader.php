@@ -55,6 +55,7 @@ class PersonnalitePhotoUploader
             'image/jpeg' => imagecreatefromjpeg($path),
             'image/png' => imagecreatefrompng($path),
             'image/webp' => imagecreatefromwebp($path),
+            'image/avif' => \function_exists('imagecreatefromavif') ? imagecreatefromavif($path) : false,
             default => false,
         };
 
@@ -64,7 +65,7 @@ class PersonnalitePhotoUploader
 
         imagepalettetotruecolor($image);
 
-        if ('image/png' === $mimeType) {
+        if (\in_array($mimeType, ['image/png', 'image/avif', 'image/webp'], true)) {
             imagealphablending($image, false);
             imagesavealpha($image, true);
         }
@@ -75,6 +76,7 @@ class PersonnalitePhotoUploader
             'image/jpeg' => imagejpeg($image, $path, 90),
             'image/png' => imagepng($image, $path),
             'image/webp' => imagewebp($image, $path, 90),
+            'image/avif' => imageavif($image, $path, 80),
         };
 
         imagedestroy($image);

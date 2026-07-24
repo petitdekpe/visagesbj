@@ -20,11 +20,13 @@ class PersonnaliteType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'required' => false,
+                'empty_data' => '',
                 'help' => 'Laisser vide pour un nom de scène / mononyme (ex. "Tchif").',
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
+                'empty_data' => '',
             ])
             ->add('role', TextareaType::class, [
                 'label' => 'Rôle (résumé court, affiché sur les cartes et la grille)',
