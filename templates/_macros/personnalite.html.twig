@@ -15,14 +15,14 @@
     {% import _self as personnalite_macros %}
     <article class="personnalite-card">
         <a href="{{ path('app_personnalites_show', { slug: personnalite.slug }) }}" class="personnalite-card__link">
-            {% if personnalite.firstName %}
-                <span class="personnalite-card__firstname">{{ personnalite.firstName }}</span>
-            {% endif %}
             <span class="personnalite-card__photo">
                 {{ personnalite_macros.avatar(personnalite) }}
             </span>
             <span class="personnalite-card__name">
-                <span class="personnalite-card__lastname">{{ personnalite.lastName }}</span>
+                <span class="personnalite-card__name-text">
+                    {% if personnalite.firstName %}{{ personnalite.firstName }} {% endif %}<span class="personnalite-card__lastname">{{ personnalite.lastName }}</span>
+                </span>
+                <span class="personnalite-card__arrow" aria-hidden="true">&rarr;</span>
             </span>
             {% if personnalite.role %}
                 <span class="personnalite-card__role">{{ personnalite.role }}</span>
