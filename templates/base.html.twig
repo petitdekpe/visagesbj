@@ -7,6 +7,19 @@
         <title>{% block title %}Hisse ton Drapeau — 66 visages du Bénin{% endblock %}</title>
         <link rel="icon" type="image/png" href="{{ asset('images/branding/htd_noir.png') }}">
 
+        {% block og_tags %}
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="Hisse ton Drapeau">
+            <meta property="og:url" content="{% block og_url %}{{ absolute_url(app.request.pathInfo) }}{% endblock %}">
+            <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}">
+            <meta property="og:description" content="{% block og_description %}{{ block('meta_description') }}{% endblock %}">
+            <meta property="og:image" content="{% block og_image %}{{ absolute_url(asset('images/branding/htd_cover.png')) }}{% endblock %}">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="{{ block('og_title') }}">
+            <meta name="twitter:description" content="{{ block('og_description') }}">
+            <meta name="twitter:image" content="{{ block('og_image') }}">
+        {% endblock %}
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">

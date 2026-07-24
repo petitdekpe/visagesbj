@@ -3,8 +3,12 @@
 
 {% block title %}{{ personnalite.fullName }} — Hisse ton Drapeau{% endblock %}
 {% block meta_description %}{{ personnalite.role ?? (personnalite.fullName ~ ' — l\'une des 66 personnalités béninoises de la campagne Hisse ton Drapeau.') }}{% endblock %}
+{% block og_url %}{{ url('app_personnalites_show', { slug: personnalite.slug }) }}{% endblock %}
+{% block og_image %}{% if personnalite.photo %}{{ absolute_url(asset('images/personnalites/' ~ personnalite.photo)) }}{% else %}{{ parent() }}{% endif %}{% endblock %}
 
 {% block body %}
+    {% set share_url = url('app_personnalites_show', { slug: personnalite.slug }) %}
+    {% set share_text = personnalite.fullName ~ ' — 66 visages du Bénin' %}
     <article class="profile-hero">
         <div class="profile-hero__info">
             <div class="profile-hero__info-inner">
@@ -29,6 +33,34 @@
                         <p>{{ personnalite.role }}</p>
                     </div>
                 {% endif %}
+
+                <div class="profile-hero__share" data-controller="share">
+                    <span class="profile-hero__share-label">Partager</span>
+                    <div class="profile-hero__share-buttons">
+                        <a class="profile-hero__share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Partager sur Facebook">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M14.5 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.3 1.4-1.3h1.5V5.4c-.3 0-1.1-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H9.1v2.8h2.4V21h3z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a class="profile-hero__share-btn" href="https://wa.me/?text={{ (share_text ~ ' ' ~ share_url)|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Partager sur WhatsApp">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M12 4a8 8 0 0 0-6.9 12.1L4 20l4-1.1A8 8 0 1 0 12 4z" fill="currentColor"/>
+                                <path d="M9.1 8.2c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .5.4l.7 1.6c.1.1.1.3 0 .4l-.5.7c-.1.2-.2.3 0 .5.2.3.7.9 1.4 1.5.7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.5-.7c.1-.1.3-.2.5-.1l1.4.7c.2.1.3.1.4.3.1.2 0 .8-.2 1.1-.3.4-1.2.8-1.8.8-.5 0-1.1 0-3.4-1.4-1.8-1.1-2.9-2.8-3.1-3.1-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.8-2.1z" fill="var(--color-green-900)"/>
+                            </svg>
+                        </a>
+                        <a class="profile-hero__share-btn" href="https://twitter.com/intent/tweet?url={{ share_url|url_encode }}&text={{ share_text|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Partager sur X">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </a>
+                        <button type="button" class="profile-hero__share-btn profile-hero__share-btn--copy" data-share-target="copyButton" data-action="share#copyLink" data-clipboard-text="{{ share_url }}" aria-label="Copier le lien de la page">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M9.5 14.5l5-5M10.5 8.5l.9-.9a3 3 0 1 1 4.2 4.2l-.9.9M13.5 15.5l-.9.9a3 3 0 1 1-4.2-4.2l.9-.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span data-share-target="copyLabel">Copier le lien</span>
+                        </button>
+                    </div>
+                </div>
 
                 <img class="profile-hero__logo" src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau">
             </div>
