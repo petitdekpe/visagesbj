@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de confidentialité — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Politique de confidentialité du site Hisse ton Drapeau, conforme à la réglementation béninoise sur la protection des données personnelles (APDP).{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <h1 class="section-title">Politique de confidentialité</h1>
+            <p>Comment le site Hisse ton Drapeau traite les données personnelles de ses visiteurs.</p>
+        </div>
+    </header>
+
+    {% set settings = site_settings() %}
+    <div class="container">
+        <section class="section">
+            <div class="legal-content">
+                <h2>1. Responsable du traitement</h2>
+                <p>
+                    Le responsable du traitement des données à caractère personnel collectées sur le site
+                    « Hisse ton Drapeau » est le <strong>Ministère de la Culture, des Arts et du Patrimoine (MCAP)</strong>
+                    de la République du Bénin, maître d'ouvrage de la campagne. La réalisation technique du site et,
+                    à ce titre, le traitement opérationnel de certaines données, sont assurés pour son compte par
+                    l'agence <strong>PROCOM</strong>, maître d'œuvre de la campagne, agissant en qualité de
+                    sous-traitant.
+                </p>
+                <p>
+                    Contact du responsable du traitement : <span{{ settings.email ? '' : ' class="is-placeholder"' }}>{{ settings.email ?: 'à renseigner' }}</span> (voir
+                    aussi la page <a href="{{ path('app_contact') }}">Contacts</a>).
+                </p>
+
+                <h2>2. Données collectées</h2>
+                <p>
+                    Le site « Hisse ton Drapeau » est un site vitrine institutionnel : il ne propose ni création de
+                    compte, ni formulaire de collecte de données personnelles à ce jour. Les seules données traitées
+                    sont :
+                </p>
+                <ul>
+                    <li>
+                        les <strong>données techniques de connexion</strong> (adresse IP, type de navigateur, pages
+                        consultées, date et heure de connexion), collectées automatiquement par l'hébergeur à des
+                        fins de sécurité et de bon fonctionnement du site ;
+                    </li>
+                    <li>
+                        un <strong>cookie technique</strong> de sécurité (protection contre les attaques CSRF), utilisé
+                        uniquement lors de l'utilisation des formulaires de l'espace d'administration du site.
+                    </li>
+                </ul>
+                <p>
+                    Si un formulaire de contact ou une inscription à une newsletter venait à être ajouté, la présente
+                    politique serait mise à jour en conséquence avant toute collecte.
+                </p>
+
+                <h2>3. Finalités du traitement</h2>
+                <p>Les données mentionnées ci-dessus sont traitées pour les finalités suivantes :</p>
+                <ul>
+                    <li>assurer le fonctionnement, la sécurité et la maintenance du site ;</li>
+                    <li>prévenir la fraude et les usages abusifs (protection CSRF, journaux techniques) ;</li>
+                    <li>établir des statistiques de fréquentation générales et anonymisées, le cas échéant.</li>
+                </ul>
+
+                <h2>4. Base légale</h2>
+                <p>
+                    Ces traitements reposent sur l'exécution d'une mission d'intérêt public confiée au Ministère de
+                    la Culture, des Arts et du Patrimoine, ainsi que sur l'intérêt légitime de l'éditeur à assurer la
+                    sécurité et le bon fonctionnement du site.
+                </p>
+
+                <h2>5. Destinataires des données</h2>
+                <p>
+                    Les données techniques sont accessibles à l'équipe technique de l'agence PROCOM (maître d'œuvre)
+                    et à l'hébergeur du site, dans la stricte mesure nécessaire à leurs missions respectives. Elles
+                    ne sont ni vendues, ni cédées, ni communiquées à des tiers à des fins commerciales.
+                </p>
+
+                <h2>6. Services tiers et transferts de données</h2>
+                <p>
+                    Le site fait appel aux services externes suivants, susceptibles d'entraîner un transfert
+                    d'informations techniques (notamment l'adresse IP) vers des serveurs situés hors du Bénin :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Google Fonts</strong> (fonts.googleapis.com / fonts.gstatic.com) : chargement des
+                        polices de caractères du site ;
+                    </li>
+                    <li>
+                        <strong>YouTube</strong> (via le domaine « youtube-nocookie.com », en mode confidentialité
+                        renforcée) : lecture du clip de l'hymne de la campagne, chargée uniquement après un clic
+                        explicite du visiteur sur le bouton de lecture.
+                    </li>
+                </ul>
+                <p>
+                    Ces services sont soumis à leurs propres politiques de confidentialité, disponibles sur les
+                    sites de leurs éditeurs respectifs.
+                </p>
+
+                <h2 id="cookies">7. Cookies</h2>
+                <p>
+                    Le site utilise un unique cookie, strictement nécessaire à la sécurité des formulaires de
+                    l'espace d'administration (protection CSRF). Ce cookie technique est exempté de consentement
+                    préalable au regard des pratiques usuelles en matière de protection des données : il ne sert à
+                    aucun suivi publicitaire ni à aucune finalité statistique et n'est pas déposé lors d'une simple
+                    navigation sur les pages publiques du site.
+                </p>
+
+                <h2>8. Durée de conservation</h2>
+                <p>
+                    Les journaux techniques de connexion sont conservés pour une durée n'excédant pas celle
+                    nécessaire aux finalités de sécurité mentionnées ci-dessus, conformément aux durées habituellement
+                    pratiquées par les hébergeurs. Le cookie de sécurité CSRF est temporaire et supprimé à l'issue de
+                    la soumission du formulaire concerné.
+                </p>
+
+                <h2>9. Sécurité des données</h2>
+                <p>
+                    Des mesures techniques et organisationnelles raisonnables sont mises en œuvre pour protéger les
+                    données traitées contre la perte, l'accès non autorisé, la divulgation ou l'altération
+                    (connexion chiffrée HTTPS, accès restreint à l'espace d'administration, etc.).
+                </p>
+
+                <h2>10. Vos droits</h2>
+                <p>
+                    Conformément à la <strong>loi n° 2009-09 du 27 août 2009 portant protection des données à
+                    caractère personnel en République du Bénin</strong> et aux dispositions du Code du numérique
+                    (loi n° 2017-20), toute personne dispose, sur les données la concernant, d'un droit d'accès, de
+                    rectification, d'opposition et, dans les conditions prévues par la loi, d'effacement.
+                </p>
+                <p>
+                    Ces droits peuvent être exercés en écrivant à l'adresse indiquée sur la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>, en précisant l'objet de la demande et en
+                    justifiant de son identité.
+                </p>
+                <p>
+                    Vous disposez également du droit d'introduire une réclamation auprès de l'
+                    <strong>Autorité de Protection des Données Personnelles (APDP)</strong> du Bénin, autorité de
+                    contrôle compétente, dont le site officiel est
+                    <a href="https://service.apdp.bj/" target="_blank" rel="noopener noreferrer">service.apdp.bj</a>.
+                </p>
+
+                <h2>11. Modifications de la présente politique</h2>
+                <p>
+                    Cette politique de confidentialité peut être mise à jour, notamment en cas d'évolution du site
+                    ou de la réglementation applicable. La date de dernière mise à jour figure en bas de cette page.
+                </p>
+
+                <p class="legal-updated">Dernière mise à jour : {{ "now"|date("d/m/Y") }}.</p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Mentions légales du site Hisse ton Drapeau : éditeur, maître d'œuvre, hébergement et propriété intellectuelle.{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <h1 class="section-title">Mentions légales</h1>
+            <p>Informations relatives à l'édition, la réalisation et l'hébergement du site.</p>
+        </div>
+    </header>
+
+    {% set settings = site_settings() %}
+    <div class="container">
+        <section class="section">
+            <div class="legal-content">
+                <h2>Éditeur du site</h2>
+                <p>
+                    Le site « Hisse ton Drapeau » (<a href="https://amissa.site/">amissa.site</a>) est édité par le
+                    <strong>Ministère de la Culture, des Arts et du Patrimoine (MCAP)</strong> de la République du
+                    Bénin, maître d'ouvrage de la campagne « Hisse ton Drapeau », à l'occasion du 66<sup>e</sup>
+                    anniversaire de l'indépendance du Bénin.
+                </p>
+                <ul>
+                    <li>Adresse du siège : <span{{ settings.address ? '' : ' class="is-placeholder"' }}>{{ settings.address ?: 'à renseigner' }}</span></li>
+                    <li>Téléphone : <span{{ settings.phone ? '' : ' class="is-placeholder"' }}>{{ settings.phone ?: 'à renseigner' }}</span></li>
+                    <li>E-mail : <span{{ settings.email ? '' : ' class="is-placeholder"' }}>{{ settings.email ?: 'à renseigner' }}</span></li>
+                    <li>Directeur·rice de la publication : <span{{ settings.publicationDirector ? '' : ' class="is-placeholder"' }}>{{ settings.publicationDirector ?: 'à renseigner' }}</span></li>
+                </ul>
+
+                <h2>Maîtrise d'œuvre et réalisation</h2>
+                <p>
+                    La conception, la réalisation technique et la gestion éditoriale courante du site sont assurées,
+                    pour le compte du Ministère de la Culture, des Arts et du Patrimoine, par l'agence
+                    <strong>PROCOM</strong>, maître d'œuvre de la campagne « Hisse ton Drapeau ».
+                </p>
+                <ul>
+                    <li>Adresse : <span class="is-placeholder">à renseigner</span></li>
+                    <li>Contact : <span class="is-placeholder">à renseigner</span></li>
+                </ul>
+
+                <h2>Hébergement</h2>
+                <p>Le site est hébergé par :</p>
+                <ul>
+                    <li>Raison sociale : 001.africa</li>
+                    <li>Adresse : <span class="is-placeholder">à renseigner</span></li>
+                    <li>Contact : <span class="is-placeholder">à renseigner</span></li>
+                </ul>
+
+                <h2>Propriété intellectuelle</h2>
+                <p>
+                    L'ensemble des éléments présents sur le site — textes, photographies et portraits, illustrations,
+                    logos, éléments graphiques, vidéos et contenus audio (notamment l'hymne officiel de la campagne)
+                    — est protégé par le droit d'auteur et, le cas échéant, le droit des marques. Sauf mention
+                    contraire, ces éléments sont la propriété du Ministère de la Culture, des Arts et du Patrimoine
+                    ou de ses partenaires et ayants droit.
+                </p>
+                <p>
+                    Toute reproduction, représentation, modification ou diffusion, totale ou partielle, du contenu du
+                    site, par quelque procédé que ce soit, sans autorisation préalable, est interdite, sous réserve
+                    des exceptions prévues par la loi (notamment l'usage dans un cadre strictement privé).
+                </p>
+
+                <h3>Crédits photographiques</h3>
+                <p>
+                    Les portraits des personnalités présentées dans le cadre des « 66 visages » sont utilisés avec
+                    l'autorisation de leurs ayants droit ou fournis par le Ministère de la Culture, des Arts et du
+                    Patrimoine et l'agence PROCOM dans le cadre de la campagne. Toute personnalité présentée
+                    souhaitant faire retirer ou modifier sa photographie peut contacter l'éditeur via la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>.
+                </p>
+
+                <h2>Signaler un contenu</h2>
+                <p>
+                    Pour toute question, réclamation, ou pour signaler un contenu que vous estimez inexact ou
+                    contraire à la loi, vous pouvez contacter l'éditeur via la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>.
+                </p>
+
+                <p class="legal-updated">Dernière mise à jour : {{ "now"|date("d/m/Y") }}.</p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

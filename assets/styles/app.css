@@ -169,7 +169,7 @@ p {
 }
 
 .site-header__brand img {
-    height: 48px;
+    height: 74px;
     width: auto;
 }
 
@@ -291,7 +291,7 @@ a.hero__tile:focus-visible {
 
 .hero__lockup img {
     flex: none;
-    height: 56px;
+    height: 85px;
     width: auto;
 }
 
@@ -581,7 +581,7 @@ a.hero__tile:focus-visible {
 }
 
 .site-footer__brand img {
-    height: 54px;
+    height: 82px;
     width: auto;
     margin-bottom: 16px;
 }
@@ -628,6 +628,10 @@ a.hero__tile:focus-visible {
 
 .site-footer__contacts em {
     font-style: normal;
+    color: rgba(255, 255, 255, .9);
+}
+
+.site-footer__contacts em.is-placeholder {
     color: rgba(255, 255, 255, .5);
 }
 
@@ -893,7 +897,7 @@ a.hero__tile:focus-visible {
 .profile-hero__logo {
     flex: none;
     align-self: flex-start;
-    height: 36px;
+    height: 55px;
     width: auto;
     margin-top: 20px;
 }
@@ -1072,6 +1076,69 @@ a.hero__tile:focus-visible {
     color: var(--color-gray-600);
 }
 
+/* Legal pages (mentions légales, confidentialité, CGU) */
+.legal-content {
+    max-width: 780px;
+}
+
+.legal-content h2 {
+    margin: 40px 0 12px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--color-green-900);
+}
+
+.legal-content h2:first-child {
+    margin-top: 0;
+}
+
+.legal-content h3 {
+    margin: 24px 0 8px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-ink);
+}
+
+.legal-content p {
+    margin-bottom: 14px;
+    line-height: 1.6;
+    color: var(--color-ink);
+}
+
+.legal-content ul {
+    margin: 0 0 14px;
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.legal-content li {
+    margin-bottom: 6px;
+}
+
+.legal-content a {
+    color: var(--color-green-900);
+    text-decoration: underline;
+}
+
+.legal-content a:hover {
+    color: var(--color-green-700);
+}
+
+.legal-content .is-placeholder {
+    font-style: italic;
+    color: var(--color-gray-600);
+}
+
+.legal-content .legal-updated {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-gray-200);
+    font-size: 13px;
+    color: var(--color-gray-600);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .site-footer__inner {
@@ -1135,7 +1202,7 @@ a.hero__tile:focus-visible {
     }
 
     .hero__lockup img {
-        height: 28px;
+        height: 43px;
     }
 
     .hero__meta-label {

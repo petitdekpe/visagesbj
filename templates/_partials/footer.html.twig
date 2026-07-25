@@ -1,8 +1,8 @@
 <footer class="site-footer">
     <div class="container site-footer__inner">
         <div class="site-footer__brand">
-            <img src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau" width="180" height="81">
-            <p>#HisseTonDrapeau — 66 ans d'indépendance, 66 visages qui font la fierté du Bénin.</p>
+            <img src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau" width="116" height="82">
+            <p>#HisseTonDrapeau | 66 ans d'indépendance, 66 visages qui font la fierté du Bénin.</p>
         </div>
 
         <div class="site-footer__col">
@@ -15,12 +15,13 @@
             </ul>
         </div>
 
+        {% set settings = site_settings() %}
         <div class="site-footer__col">
             <h2>Contacts</h2>
             <ul class="site-footer__contacts">
-                <li><span>E-mail</span><em>à renseigner</em></li>
-                <li><span>Téléphone</span><em>à renseigner</em></li>
-                <li><span>Adresse</span><em>à renseigner</em></li>
+                <li><span>E-mail</span><em{{ settings.email ? '' : ' class="is-placeholder"' }}>{{ settings.email ?: 'à renseigner' }}</em></li>
+                <li><span>Téléphone</span><em{{ settings.phone ? '' : ' class="is-placeholder"' }}>{{ settings.phone ?: 'à renseigner' }}</em></li>
+                <li><span>Adresse</span><em{{ settings.address ? '' : ' class="is-placeholder"' }}>{{ settings.address ?: 'à renseigner' }}</em></li>
             </ul>
         </div>
     </div>
@@ -29,10 +30,10 @@
         <div class="container site-footer__bottom-inner">
             <p>&copy; {{ "now"|date("Y") }} Hisse ton Drapeau. Tous droits réservés.</p>
             <ul>
-                <li><a href="#">Politique de confidentialité</a></li>
-                <li><a href="#">Mentions légales</a></li>
-                <li><a href="#">Conditions générales d'utilisation</a></li>
-                <li><a href="#">Gestion des cookies</a></li>
+                <li><a href="{{ path('app_privacy') }}">Politique de confidentialité</a></li>
+                <li><a href="{{ path('app_legal_notice') }}">Mentions légales</a></li>
+                <li><a href="{{ path('app_terms') }}">Conditions générales d'utilisation</a></li>
+                <li><a href="{{ path('app_privacy') }}#cookies">Gestion des cookies</a></li>
             </ul>
         </div>
     </div>

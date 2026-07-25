@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin — Paramètres du site{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section admin-form-section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Paramètres du site</h1>
+            </div>
+            <p class="admin-hint">
+                Ces informations alimentent le pied de page, la page Contacts et les mentions légales.
+            </p>
+
+            {{ form_start(form, { attr: { class: 'admin-form', novalidate: 'novalidate' } }) }}
+                <div class="admin-form__field">
+                    {{ form_label(form.address) }}
+                    {{ form_widget(form.address) }}
+                    {{ form_errors(form.address) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.phone) }}
+                    {{ form_widget(form.phone) }}
+                    {{ form_errors(form.phone) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.publicationDirector) }}
+                    {{ form_widget(form.publicationDirector) }}
+                    {{ form_help(form.publicationDirector) }}
+                    {{ form_errors(form.publicationDirector) }}
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Enregistrer</button>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions générales d'utilisation — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Conditions générales d'utilisation du site de la campagne Hisse ton Drapeau.{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <h1 class="section-title">Conditions générales d'utilisation</h1>
+            <p>Règles applicables à l'utilisation du site Hisse ton Drapeau.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <div class="legal-content">
+                <h2>1. Objet</h2>
+                <p>
+                    Les présentes conditions générales d'utilisation (CGU) régissent l'accès et l'utilisation du
+                    site « Hisse ton Drapeau » (<a href="https://amissa.site/">amissa.site</a>), édité par le
+                    Ministère de la Culture, des Arts et du Patrimoine (MCAP) de la République du Bénin, maître
+                    d'ouvrage, et réalisé par l'agence PROCOM, maître d'œuvre, dans le cadre de la campagne « Hisse
+                    ton Drapeau » célébrant le 66<sup>e</sup> anniversaire de l'indépendance du Bénin.
+                </p>
+
+                <h2>2. Acceptation des CGU</h2>
+                <p>
+                    L'accès et la navigation sur le site impliquent l'acceptation pleine et entière des présentes
+                    CGU par tout visiteur. Si vous n'acceptez pas ces conditions, nous vous invitons à ne pas
+                    utiliser le site.
+                </p>
+
+                <h2>3. Accès au site</h2>
+                <p>
+                    Le site est accessible gratuitement à tout utilisateur disposant d'un accès à internet. Tous les
+                    frais nécessaires pour accéder au site (matériel, connexion internet, etc.) sont à la charge de
+                    l'utilisateur. L'éditeur met tout en œuvre pour assurer l'accessibilité du site, mais ne peut
+                    garantir une disponibilité continue et pourra suspendre l'accès pour des opérations de
+                    maintenance, sans préavis.
+                </p>
+
+                <h2>4. Contenu du site</h2>
+                <p>
+                    Le site présente la campagne « Hisse ton Drapeau » : sa présentation, son identité sonore, et les
+                    « 66 visages » de personnalités béninoises qui l'incarnent. L'éditeur s'efforce d'assurer
+                    l'exactitude et la mise à jour des informations publiées, sans pouvoir garantir qu'elles soient
+                    exemptes d'erreur ou d'omission.
+                </p>
+                <p>
+                    Toute personnalité présentée, ou toute personne concernée par un contenu du site, peut demander
+                    une correction ou un retrait en écrivant via la page <a href="{{ path('app_contact') }}">Contacts</a>.
+                </p>
+
+                <h2>5. Propriété intellectuelle</h2>
+                <p>
+                    Les modalités relatives à la propriété intellectuelle des contenus du site (textes,
+                    photographies, logos, éléments graphiques, contenus audio et vidéo) sont détaillées dans les
+                    <a href="{{ path('app_legal_notice') }}">mentions légales</a> du site.
+                </p>
+
+                <h2>6. Partage sur les réseaux sociaux</h2>
+                <p>
+                    Le site propose des fonctionnalités de partage vers des réseaux sociaux tiers (Facebook,
+                    WhatsApp, X). L'utilisation de ces services est soumise aux conditions d'utilisation propres à
+                    chacune de ces plateformes, sur lesquelles l'éditeur n'exerce aucun contrôle.
+                </p>
+
+                <h2>7. Liens hypertextes</h2>
+                <p>
+                    Le site peut contenir des liens vers des sites tiers (Wikipédia, YouTube, réseaux sociaux,
+                    etc.). L'éditeur n'exerce aucun contrôle sur le contenu de ces sites et décline toute
+                    responsabilité quant à leur contenu ou leur disponibilité.
+                </p>
+
+                <h2>8. Responsabilité</h2>
+                <p>
+                    L'éditeur ne saurait être tenu responsable des dommages directs ou indirects résultant de
+                    l'accès au site, de son indisponibilité temporaire, ou de l'utilisation qui en est faite,
+                    notamment en cas d'interruption du service, de virus informatique ou de tout autre événement
+                    hors de son contrôle raisonnable.
+                </p>
+
+                <h2>9. Protection des données personnelles</h2>
+                <p>
+                    Le traitement des données personnelles dans le cadre de l'utilisation du site est décrit dans la
+                    <a href="{{ path('app_privacy') }}">politique de confidentialité</a> du site, conforme à la
+                    réglementation béninoise applicable et aux principes portés par l'Autorité de Protection des
+                    Données Personnelles (APDP) du Bénin.
+                </p>
+
+                <h2>10. Droit applicable et juridiction compétente</h2>
+                <p>
+                    Les présentes CGU sont soumises au droit béninois. Tout litige relatif à leur interprétation ou
+                    leur exécution relève de la compétence exclusive des juridictions de la République du Bénin,
+                    sauf disposition légale contraire.
+                </p>
+
+                <h2>11. Modification des CGU</h2>
+                <p>
+                    L'éditeur se réserve le droit de modifier les présentes CGU à tout moment, notamment pour tenir
+                    compte de l'évolution du site ou de la réglementation. Les CGU applicables sont celles en
+                    vigueur à la date de consultation du site.
+                </p>
+
+                <h2>12. Contact</h2>
+                <p>
+                    Pour toute question relative aux présentes CGU, vous pouvez contacter l'éditeur via la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>.
+                </p>
+
+                <p class="legal-updated">Dernière mise à jour : {{ "now"|date("d/m/Y") }}.</p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

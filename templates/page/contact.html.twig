@@ -11,20 +11,21 @@
         </div>
     </header>
 
+    {% set settings = site_settings() %}
     <div class="container">
         <section class="section">
             <div class="contact-grid">
                 <div class="contact-card">
                     <h3>E-mail</h3>
-                    <p class="is-placeholder">à renseigner</p>
+                    <p{{ settings.email ? '' : ' class="is-placeholder"' }}>{{ settings.email ?: 'à renseigner' }}</p>
                 </div>
                 <div class="contact-card">
                     <h3>Téléphone</h3>
-                    <p class="is-placeholder">à renseigner</p>
+                    <p{{ settings.phone ? '' : ' class="is-placeholder"' }}>{{ settings.phone ?: 'à renseigner' }}</p>
                 </div>
                 <div class="contact-card">
                     <h3>Adresse</h3>
-                    <p class="is-placeholder">à renseigner</p>
+                    <p{{ settings.address ? '' : ' class="is-placeholder"' }}>{{ settings.address ?: 'à renseigner' }}</p>
                 </div>
             </div>
         </section>
