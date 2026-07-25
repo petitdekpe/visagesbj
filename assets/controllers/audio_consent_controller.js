@@ -10,6 +10,12 @@ import { Controller } from '@hotwired/stimulus';
  * connect()/disconnect() even though the DOM node is reused — so listeners
  * added here must be torn down in disconnect(), or repeated visits stack up
  * duplicate handlers and the button state drifts out of sync with reality.
+ *
+ * True silent autoplay on page load isn't possible (browsers require a user
+ * gesture before allowing sound), so landing on the homepage arms a one-shot
+ * listener that starts playback on the visitor's very first interaction
+ * anywhere on the page — not just a click on this button specifically — so
+ * it feels immediate rather than requiring them to find and press play.
  */
 export default class extends Controller {
     static targets = ['audio', 'button', 'label'];
@@ -20,11 +26,14 @@ export default class extends Controller {
         this.audioTarget.addEventListener('play', this.onPlay);
         this.audioTarget.addEventListener('pause', this.onPause);
         this.syncState();
+
+        this.armAutoplayOnHome();
     }
 
     disconnect() {
         this.audioTarget.removeEventListener('play', this.onPlay);
         this.audioTarget.removeEventListener('pause', this.onPause);
+        this.disarmAutoplay();
     }
 
     toggle() {
@@ -33,6 +42,36 @@ export default class extends Controller {
         } else {
             this.audioTarget.pause();
         }
+    }
+
+    armAutoplayOnHome() {
+        if (window.location.pathname !== '/' || !this.audioTarget.paused) {
+            return;
+        }
+
+        this.autoplayHandler = (event) => {
+            // The button already starts/stops playback itself via toggle() —
+            // only step in when the first interaction was something else, so
+            // we don't immediately re-toggle (and stop) the audio it just started.
+            if (!this.buttonTarget.contains(event.target) && this.audioTarget.paused) {
+                this.audioTarget.play().catch(() => {});
+            }
+            this.disarmAutoplay();
+        };
+
+        ['pointerdown', 'keydown'].forEach((type) => {
+            document.addEventListener(type, this.autoplayHandler, { once: true });
+        });
+    }
+
+    disarmAutoplay() {
+        if (!this.autoplayHandler) {
+            return;
+        }
+        ['pointerdown', 'keydown'].forEach((type) => {
+            document.removeEventListener(type, this.autoplayHandler);
+        });
+        this.autoplayHandler = null;
     }
 
     syncState() {

@@ -35,6 +35,7 @@ class PersonnaliteController extends AbstractController
 
         return $this->render('personnalite/show.html.twig', [
             'personnalite' => $personnalite,
+            'others' => $personnaliteRepository->findRandomOthers($personnalite),
         ]);
     }
 }

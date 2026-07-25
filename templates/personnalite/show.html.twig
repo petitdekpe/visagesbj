@@ -34,6 +34,30 @@
                     </div>
                 {% endif %}
 
+                {% if personnalite.wikipediaUrl %}
+                    <a class="profile-hero__wikipedia" href="{{ personnalite.wikipediaUrl }}" target="_blank" rel="noopener noreferrer">
+                        Voir sur Wikipédia &rarr;
+                    </a>
+                {% endif %}
+
+                {% if personnalite.achievements %}
+                    {% set achievement_lines = personnalite.achievements|replace({'\r\n': '\n', '\r': '\n'})|split('\n')|slice(0, 3) %}
+                    <ul class="profile-hero__achievements">
+                        {% for line in achievement_lines %}
+                            {% if line|trim is not empty %}
+                                {% set parts = line|split('|') %}
+                                <li class="profile-hero__achievement">
+                                    {% if parts[1] is defined and parts[1]|trim is not empty %}
+                                        <a href="{{ parts[1]|trim }}" target="_blank" rel="noopener noreferrer">{{ parts[0]|trim }}</a>
+                                    {% else %}
+                                        {{ parts[0]|trim }}
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
                 <div class="profile-hero__share" data-controller="share">
                     <span class="profile-hero__share-label">Partager</span>
                     <div class="profile-hero__share-buttons">
@@ -67,7 +91,28 @@
         </div>
 
         <div class="profile-hero__photo">
-            {{ m.avatar(personnalite) }}
+            {% if personnalite.photo %}
+                <div class="profile-hero__photo-blur" style="background-image: url('{{ asset('images/personnalites/' ~ personnalite.photo) }}')" aria-hidden="true"></div>
+            {% endif %}
+            <div class="profile-hero__photo-frame">
+                {{ m.avatar(personnalite) }}
+            </div>
         </div>
     </article>
+
+    {% if others %}
+        <div class="container">
+            <section class="section">
+                <div class="section-heading">
+                    <span class="section-heading__bar" aria-hidden="true"></span>
+                    <h2 class="section-title">Découvrez aussi</h2>
+                </div>
+                <div class="personnalites-grid">
+                    {% for autre in others %}
+                        {{ m.card(autre) }}
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    {% endif %}
 {% endblock %}

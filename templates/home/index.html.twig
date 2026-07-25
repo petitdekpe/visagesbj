@@ -9,14 +9,14 @@
             <div class="hero__panel">
                 {# 15 slots per row: the 11 faces plus an empty gutter after columns 2, 5, 6 and 9. #}
                 {% set hero_pattern = [0, 1, 'gap', 2, 3, 4, 'gap', 5, 'gap', 6, 7, 8, 'gap', 9, 10] %}
-                <div class="hero__grid" aria-hidden="true">
+                <div class="hero__grid">
                     {% for row in heroFaces|batch(11, preserve_keys=false) %}
                         <div class="hero__row">
                             {% for slot in hero_pattern %}
                                 {% if slot == 'gap' or row[slot] is not defined %}
                                     <span class="hero__gap"></span>
                                 {% else %}
-                                    <span class="hero__tile">{{ m.avatar(row[slot]) }}</span>
+                                    <a href="{{ path('app_personnalites_show', { slug: row[slot].slug }) }}" class="hero__tile" aria-label="{{ row[slot].fullName }}">{{ m.avatar(row[slot]) }}</a>
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -31,7 +31,7 @@
 
                 <div class="hero__lockup">
                     <span class="hero__meta-label">66 visages</span>
-                    <img src="{{ asset('images/branding/htd_blanc.png') }}" alt="Hisse ton Drapeau">
+                    <img src="{{ asset('images/branding/htd-hero.png') }}" alt="Hisse ton Drapeau">
                     <span class="hero__meta-year">2026</span>
                 </div>
             </div>

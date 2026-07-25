@@ -34,6 +34,19 @@ class Personnalite
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'Merci de renseigner une URL valide.')]
+    #[Assert\Length(max: 255)]
+    private ?string $wikipediaUrl = null;
+
+    /**
+     * One achievement/distinction per line, formatted as "Texte" or
+     * "Texte | URL" (URL optional — e.g. a YouTube clip for an artist).
+     * Parsed for display in the show template; at most 3 are shown.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $achievements = null;
+
     #[ORM\Column(length: 180, unique: true)]
     private string $slug = '';
 
@@ -106,6 +119,30 @@ class Personnalite
     public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getWikipediaUrl(): ?string
+    {
+        return $this->wikipediaUrl;
+    }
+
+    public function setWikipediaUrl(?string $wikipediaUrl): static
+    {
+        $this->wikipediaUrl = $wikipediaUrl;
+
+        return $this;
+    }
+
+    public function getAchievements(): ?string
+    {
+        return $this->achievements;
+    }
+
+    public function setAchievements(?string $achievements): static
+    {
+        $this->achievements = $achievements;
 
         return $this;
     }

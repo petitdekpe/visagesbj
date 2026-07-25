@@ -18,16 +18,11 @@ class PersonnalitePhotoUploader
      */
     public function upload(File $file, string $baseName): string
     {
-        $mimeType = $file->getMimeType();
-
         $slugger = new AsciiSlugger();
         $safeName = strtolower((string) $slugger->slug($baseName));
-        $extension = $file->guessExtension() ?: $file->getExtension();
-        $filename = sprintf('%s-%s.%s', $safeName, bin2hex(random_bytes(4)), $extension);
+        $filename = sprintf('%s-%s.webp', $safeName, bin2hex(random_bytes(4)));
 
-        $file->move($this->targetDirectory, $filename);
-
-        $this->convertToGrayscale($this->targetDirectory.'/'.$filename, $mimeType);
+        $this->convertToWebp($file->getPathname(), $this->targetDirectory.'/'.$filename, $file->getMimeType());
 
         return $filename;
     }
@@ -45,40 +40,31 @@ class PersonnalitePhotoUploader
     }
 
     /**
-     * Photos are displayed in black & white across the site (matches the
-     * campaign's visual identity), so convert on upload rather than relying
-     * on a CSS filter — the stored file itself becomes grayscale.
+     * The stored file keeps its original colors — the black & white look on
+     * the public site is a CSS filter (grayscale by default, full color on
+     * hover), not a destructive pixel conversion. Every upload is converted
+     * to WebP regardless of source format, to keep file sizes down.
      */
-    private function convertToGrayscale(string $path, ?string $mimeType): void
+    private function convertToWebp(string $sourcePath, string $targetPath, ?string $mimeType): void
     {
         $image = match ($mimeType) {
-            'image/jpeg' => imagecreatefromjpeg($path),
-            'image/png' => imagecreatefrompng($path),
-            'image/webp' => imagecreatefromwebp($path),
-            'image/avif' => \function_exists('imagecreatefromavif') ? imagecreatefromavif($path) : false,
+            'image/jpeg' => imagecreatefromjpeg($sourcePath),
+            'image/png' => imagecreatefrompng($sourcePath),
+            'image/webp' => imagecreatefromwebp($sourcePath),
+            'image/avif' => \function_exists('imagecreatefromavif') ? imagecreatefromavif($sourcePath) : false,
             default => false,
         };
 
         if (false === $image) {
-            return;
+            throw new \RuntimeException(sprintf('Format d\'image non supporté : "%s".', $mimeType));
         }
 
         imagepalettetotruecolor($image);
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
 
-        if (\in_array($mimeType, ['image/png', 'image/avif', 'image/webp'], true)) {
-            imagealphablending($image, false);
-            imagesavealpha($image, true);
-        }
+        imagewebp($image, $targetPath, 82);
 
-        imagefilter($image, IMG_FILTER_GRAYSCALE);
-
-        match ($mimeType) {
-            'image/jpeg' => imagejpeg($image, $path, 90),
-            'image/png' => imagepng($image, $path),
-            'image/webp' => imagewebp($image, $path, 90),
-            'image/avif' => imageavif($image, $path, 80),
-        };
-
-        imagedestroy($image);
+        unlink($sourcePath);
     }
 }

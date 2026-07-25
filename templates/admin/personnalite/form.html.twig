@@ -46,6 +46,20 @@
                 </div>
 
                 <div class="admin-form__field">
+                    {{ form_label(form.wikipediaUrl) }}
+                    {{ form_widget(form.wikipediaUrl) }}
+                    {{ form_help(form.wikipediaUrl) }}
+                    {{ form_errors(form.wikipediaUrl) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.achievements) }}
+                    {{ form_widget(form.achievements) }}
+                    {{ form_help(form.achievements) }}
+                    {{ form_errors(form.achievements) }}
+                </div>
+
+                <div class="admin-form__field">
                     {{ form_label(form.position) }}
                     {{ form_widget(form.position) }}
                     {{ form_errors(form.position) }}

@@ -253,6 +253,15 @@ p {
     align-items: center;
     justify-content: center;
     color: rgba(255, 255, 255, .55);
+    transition: box-shadow .15s ease, transform .15s ease;
+}
+
+a.hero__tile:hover,
+a.hero__tile:focus-visible {
+    box-shadow: inset 0 0 0 3px var(--color-yellow);
+    transform: scale(1.08);
+    z-index: 2;
+    outline: none;
 }
 
 .hero__tile .avatar-photo,
@@ -497,6 +506,16 @@ p {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: grayscale(1);
+    transition: filter .3s ease;
+}
+
+.personnalite-card:hover .avatar-photo,
+.personnalite-card:focus-within .avatar-photo,
+.hero__tile:hover .avatar-photo,
+.hero__tile:focus-visible .avatar-photo,
+.admin-avatar .avatar-photo {
+    filter: grayscale(0);
 }
 
 .avatar-placeholder {
@@ -745,6 +764,61 @@ p {
     font-style: normal;
 }
 
+.profile-hero__wikipedia {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 12px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .7);
+}
+
+.profile-hero__wikipedia:hover {
+    color: var(--color-yellow);
+}
+
+.profile-hero__achievements {
+    flex: none;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-hero__achievement {
+    position: relative;
+    padding-left: 14px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, .75);
+}
+
+.profile-hero__achievement::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-yellow);
+}
+
+.profile-hero__achievement a {
+    color: rgba(255, 255, 255, .75);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.profile-hero__achievement a:hover {
+    color: var(--color-yellow);
+}
+
 .profile-hero__share {
     flex: none;
     margin-top: 20px;
@@ -825,18 +899,55 @@ p {
 }
 
 .profile-hero__photo {
+    position: relative;
     overflow: hidden;
     background: var(--color-green-700);
 }
 
-.profile-hero__photo .avatar-photo,
-.profile-hero__photo .avatar-placeholder {
+.profile-hero__photo-blur {
+    position: absolute;
+    inset: -20px;
+    background-size: cover;
+    background-position: center;
+    filter: blur(30px) grayscale(1) brightness(.55);
+    transform: scale(1.1);
+    transition: filter .3s ease;
+}
+
+.profile-hero__photo:hover .profile-hero__photo-blur {
+    filter: blur(30px) grayscale(0) brightness(.55);
+}
+
+.profile-hero__photo-frame {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+}
+
+.profile-hero__photo-frame .avatar-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(1) drop-shadow(0 12px 30px rgba(0, 0, 0, .35));
+    transition: filter .3s ease;
+}
+
+.profile-hero__photo:hover .profile-hero__photo-frame .avatar-photo {
+    filter: grayscale(0) drop-shadow(0 12px 30px rgba(0, 0, 0, .35));
+}
+
+.profile-hero__photo-frame .avatar-placeholder {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.profile-hero__photo .avatar-placeholder svg {
+.profile-hero__photo-frame .avatar-placeholder svg {
     width: 22%;
     height: 22%;
 }

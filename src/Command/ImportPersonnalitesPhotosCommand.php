@@ -46,6 +46,7 @@ class ImportPersonnalitesPhotosCommand extends Command
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Affiche ce qui serait fait, sans rien modifier')
             ->addOption('threshold', null, InputOption::VALUE_REQUIRED, 'Score minimum (0-100) pour accepter un match approximatif', 70)
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, 'Dossier à scanner (par défaut var/photos-import/)')
+            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Remplace aussi les photos déjà en place pour un match approximatif (par défaut elles sont protégées)')
         ;
     }
 
@@ -54,6 +55,7 @@ class ImportPersonnalitesPhotosCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $dryRun = (bool) $input->getOption('dry-run');
         $threshold = (float) $input->getOption('threshold');
+        $overwrite = (bool) $input->getOption('overwrite');
         $importDir = $input->getOption('dir') ?: $this->projectDir.'/var/photos-import';
 
         if (!is_dir($importDir)) {
@@ -141,11 +143,20 @@ class ImportPersonnalitesPhotosCommand extends Command
         $appliedFuzzy = [];
         $skippedHasPhotoFuzzy = [];
         foreach ($fuzzyWinners as $w) {
-            if (null !== $w['personnalite']->getPhoto()) {
+            $hasPhoto = null !== $w['personnalite']->getPhoto();
+
+            if ($hasPhoto && !$overwrite) {
                 $skippedHasPhotoFuzzy[] = sprintf('%s  →  %s (score %.1f%%, a déjà une photo)', $w['file']->getFilename(), $w['personnalite']->getFullName(), $w['score']);
                 continue;
             }
-            $appliedFuzzy[] = sprintf('%s  →  %s (score %.1f%%)', $w['file']->getFilename(), $w['personnalite']->getFullName(), $w['score']);
+
+            $appliedFuzzy[] = sprintf(
+                '%s  →  %s (score %.1f%%%s)',
+                $w['file']->getFilename(),
+                $w['personnalite']->getFullName(),
+                $w['score'],
+                $hasPhoto ? ', photo remplacée' : ''
+            );
             if (!$dryRun) {
                 $this->applyPhoto($w['personnalite'], $w['file']);
             }
