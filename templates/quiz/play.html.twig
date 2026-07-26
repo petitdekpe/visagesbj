@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz en cours — Hisse ton Drapeau{% endblock %}
+
+{% block body %}
+    <section class="quiz-stage" data-controller="quiz" data-quiz-questions-value="{{ questionsData|json_encode|e('html_attr') }}">
+        <div class="quiz-stage__inner">
+            <div class="quiz-stage__meta">
+                <span data-quiz-target="progress">Question 1/{{ total }}</span>
+                <span data-quiz-target="score">Score : 0</span>
+            </div>
+
+            <div class="quiz-stage__card" data-quiz-target="card">
+                <p class="quiz-stage__category" data-quiz-target="category"></p>
+                <h1 class="quiz-stage__question" data-quiz-target="question"></h1>
+                <div class="quiz-stage__options" data-quiz-target="options"></div>
+            </div>
+
+            <div class="quiz-stage__actions" data-quiz-target="actions">
+                <button type="button" class="btn btn--primary" data-quiz-target="nextButton" data-action="quiz#next" hidden>Question suivante &rarr;</button>
+            </div>
+
+            <div class="quiz-stage__result" data-quiz-target="result" hidden>
+                <h2 data-quiz-target="resultTitle"></h2>
+                <p data-quiz-target="resultScore"></p>
+                <div class="quiz-stage__result-actions">
+                    <a href="{{ path('app_quiz_play') }}" class="btn btn--primary">Rejouer &rarr;</a>
+                    <a href="{{ path('app_quiz_index') }}" class="back-link">&larr; Retour au quiz</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
