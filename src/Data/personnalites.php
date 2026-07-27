@@ -3,8 +3,8 @@
 /**
  * Liste de référence des personnalités affichées sur le site.
  *
- * Source : "Stratégie de campagne & rétroplanning" (SoLE SA / Ministère de la Culture,
- * des Arts et du Patrimoine), page 6 "LES 66 VISAGES DU BENIN" — cette page est
+ * Source : "Stratégie de campagne & rétroplanning" (SoLE SA / Ministère du Tourisme,
+ * de la Culture et des Arts), page 6 "LES 66 VISAGES DU BENIN" — cette page est
  * explicitement intitulée "Quelques noms" (liste illustrative, pas nécessairement
  * définitive), complétée par Angélique Kidjo et Mylène Flicka qui apparaissent dans
  * les visuels d'affichage (pages 8 et 10) mais pas dans le tableau de noms.
