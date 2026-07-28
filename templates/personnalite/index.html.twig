@@ -16,12 +16,27 @@
     </header>
 
     <div class="container">
-        <section class="section">
-            <div class="personnalites-grid">
+        <section class="section" data-controller="personnalite-search">
+            <div class="personnalites-search">
+                <input
+                    type="search"
+                    class="personnalites-search__input"
+                    placeholder="Rechercher un nom, un métier..."
+                    aria-label="Rechercher parmi les 66 visages"
+                    data-personnalite-search-target="input"
+                    data-action="input->personnalite-search#filter"
+                >
+            </div>
+
+            <div class="personnalites-grid" data-personnalite-search-target="grid">
                 {% for personnalite in personnalites %}
                     {{ m.card(personnalite) }}
                 {% endfor %}
             </div>
+
+            <p class="personnalites-search__empty" data-personnalite-search-target="empty" hidden>
+                Aucun résultat pour cette recherche.
+            </p>
         </section>
     </div>
 {% endblock %}
