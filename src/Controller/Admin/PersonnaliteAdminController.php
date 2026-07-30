@@ -88,6 +88,26 @@ class PersonnaliteAdminController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/toggle-visibility', name: 'toggle_visibility', methods: ['POST'])]
+    public function toggleVisibility(
+        Request $request,
+        Personnalite $personnalite,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        if ($this->isCsrfTokenValid('toggle-visibility-personnalite-'.$personnalite->getId(), $request->request->get('_token'))) {
+            $personnalite->setVisible(!$personnalite->isVisible());
+            $entityManager->flush();
+
+            $this->addFlash('success', sprintf(
+                '%s est désormais %s sur le site public.',
+                $personnalite->getFullName(),
+                $personnalite->isVisible() ? 'visible' : 'masqué·e'
+            ));
+        }
+
+        return $this->redirectToRoute('admin_personnalites_index');
+    }
+
     #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(
         Request $request,

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11px; color: #222; }
+        h1 { font-size: 16px; margin-bottom: 2px; }
+        .subtitle { color: #666; margin-top: 0; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; vertical-align: top; }
+        th { background: #f0f0f0; }
+        .lien { word-break: break-all; font-size: 10px; }
+        .statut-oui { color: #1a7f37; font-weight: bold; }
+        .statut-non { color: #b42318; }
+    </style>
+</head>
+<body>
+    <h1>Hisse ton Drapeau — Personnalités &amp; consentement</h1>
+    <p class="subtitle">Généré le {{ generatedAt|date('d/m/Y à H:i') }} — {{ rows|length }} personnalité(s)</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">Nom</th>
+                <th style="width: 45%;">Lien de consentement</th>
+                <th style="width: 30%;">Consentement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row.nom }}</td>
+                    <td class="lien">{{ row.lien }}</td>
+                    <td class="{{ row.statut starts with 'Oui' ? 'statut-oui' : 'statut-non' }}">{{ row.statut }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

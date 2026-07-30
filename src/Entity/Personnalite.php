@@ -53,6 +53,9 @@ class Personnalite
     #[ORM\Column]
     private int $position = 0;
 
+    #[ORM\Column(options: ['default' => true])]
+    private bool $visible = true;
+
     #[ORM\Column]
     private bool $consentAccepted = false;
 
@@ -179,6 +182,18 @@ class Personnalite
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): static
+    {
+        $this->visible = $visible;
 
         return $this;
     }

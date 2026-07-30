@@ -31,13 +31,14 @@
                             <th>Fichier attendu</th>
                             <th>Rôle</th>
                             <th>Position</th>
+                            <th>Affiché</th>
                             <th>Consentement</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for personnalite in personnalites %}
-                            <tr>
+                            <tr class="{{ personnalite.visible ? '' : 'admin-table__row--hidden' }}">
                                 <td class="admin-table__photo">
                                     <span class="admin-avatar">{{ m.avatar(personnalite) }}</span>
                                 </td>
@@ -45,6 +46,15 @@
                                 <td><code>{{ personnalite.slug }}.jpg</code></td>
                                 <td class="admin-table__role">{{ personnalite.role|default('—') }}</td>
                                 <td>{{ personnalite.position }}</td>
+                                <td>
+                                    <form method="post" action="{{ path('admin_personnalites_toggle_visibility', { id: personnalite.id }) }}" data-controller="auto-submit">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('toggle-visibility-personnalite-' ~ personnalite.id) }}">
+                                        <label class="admin-toggle" title="{{ personnalite.visible ? 'Visible sur le site public' : 'Masqué·e du site public' }}">
+                                            <input type="checkbox"{{ personnalite.visible ? ' checked' : '' }} data-action="auto-submit#submit">
+                                            <span class="admin-toggle__track"><span class="admin-toggle__thumb"></span></span>
+                                        </label>
+                                    </form>
+                                </td>
                                 <td>
                                     {% if personnalite.consentAccepted %}
                                         <span class="admin-consent admin-consent--yes" title="{{ personnalite.consentedAt|date('d/m/Y H:i') }} — {{ personnalite.consentIp }}">Oui, {{ personnalite.consentedAt|date('d/m/Y') }}</span>

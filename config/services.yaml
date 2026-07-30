@@ -39,3 +39,7 @@ services:
     App\Command\ImportPersonnalitesPhotosCommand:
         arguments:
             $projectDir: '%kernel.project_dir%'
+
+    App\Command\ExportPersonnalitesConsentPdfCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

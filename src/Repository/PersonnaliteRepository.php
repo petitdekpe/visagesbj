@@ -29,11 +29,29 @@ class PersonnaliteRepository extends ServiceEntityRepository
     }
 
     /**
+     * Same as findAllOrdered() but restricted to personnalités marked visible —
+     * what the public site (index, homepage, "découvrez aussi") shows. The
+     * admin listing uses findAllOrdered() so hidden entries stay manageable.
+     *
+     * @return Personnalite[]
+     */
+    public function findVisibleOrdered(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.visible = true')
+            ->orderBy('p.position', 'ASC')
+            ->addOrderBy('p.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return Personnalite[]
      */
     public function findFeatured(int $limit = 6): array
     {
         return $this->createQueryBuilder('p')
+            ->andWhere('p.visible = true')
             ->orderBy('p.position', 'ASC')
             ->addOrderBy('p.lastName', 'ASC')
             ->setMaxResults($limit)
@@ -53,6 +71,7 @@ class PersonnaliteRepository extends ServiceEntityRepository
     {
         $others = $this->createQueryBuilder('p')
             ->andWhere('p.id != :id')
+            ->andWhere('p.visible = true')
             ->setParameter('id', $exclude->getId())
             ->getQuery()
             ->getResult();

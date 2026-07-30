@@ -16,7 +16,7 @@ class PersonnaliteController extends AbstractController
     public function index(PersonnaliteRepository $personnaliteRepository): Response
     {
         return $this->render('personnalite/index.html.twig', [
-            'personnalites' => $personnaliteRepository->findAllOrdered(),
+            'personnalites' => $personnaliteRepository->findVisibleOrdered(),
         ]);
     }
 
@@ -76,7 +76,7 @@ class PersonnaliteController extends AbstractController
     {
         $personnalite = $personnaliteRepository->findOneBySlug($slug);
 
-        if (null === $personnalite) {
+        if (null === $personnalite || !$personnalite->isVisible()) {
             throw $this->createNotFoundException('Cette personnalité n\'existe pas.');
         }
 
