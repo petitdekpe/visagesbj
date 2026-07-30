@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consentement — {{ personnalite.fullName }} — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Formulaire de consentement à l'utilisation du nom et de l'image de {{ personnalite.fullName }} dans le cadre de la campagne Hisse ton Drapeau.{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <div class="container">
+            <h1 class="section-title">Consentement</h1>
+            <p>Autorisation d'utilisation du nom et de l'image — {{ personnalite.fullName }}</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <div class="legal-content consent-content">
+                <p>
+                    Ce formulaire est destiné à <strong>{{ personnalite.fullName }}</strong>, dans le cadre de sa
+                    participation à la campagne « Hisse ton Drapeau », portée par le Ministère du Tourisme, de la
+                    Culture et des Arts (MTCA) de la République du Bénin à l'occasion du 66<sup>e</sup> anniversaire
+                    de l'indépendance.
+                </p>
+                <p>
+                    En cochant la case ci-dessous, vous autorisez le Ministère du Tourisme, de la Culture et des Arts
+                    et la Société de la Logistique des Événements (SoLE SA), maître d'œuvre de la campagne, à
+                    utiliser votre <strong>nom</strong> et votre <strong>image</strong> (photographie) sur le site
+                    « Hisse ton Drapeau », ainsi que sur les supports de communication associés à la campagne
+                    (affichage, réseaux sociaux, presse), pour la durée de la campagne et sa valorisation
+                    ultérieure.
+                </p>
+                <p>
+                    Ce recueil de consentement est réalisé conformément à la <strong>loi n° 2009-09 du 27 août 2009
+                    portant protection des données à caractère personnel</strong> en République du Bénin et aux
+                    exigences de l'<strong>Autorité de Protection des Données Personnelles (APDP)</strong>. Vous
+                    pouvez retirer ce consentement à tout moment en écrivant via la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>. Pour en savoir plus sur le traitement de vos
+                    données, consultez notre <a href="{{ path('app_privacy') }}">politique de confidentialité</a>.
+                </p>
+
+                {% if personnalite.consentAccepted %}
+                    <p class="consent-status consent-status--accepted">
+                        Consentement enregistré le {{ personnalite.consentedAt|date('d/m/Y') }} à
+                        {{ personnalite.consentedAt|date('H:i') }}. Merci !
+                    </p>
+                {% else %}
+                    <form method="post" class="consent-form">
+                        <input type="hidden" name="_token" value="{{ csrf_token('consentement-' ~ personnalite.id) }}">
+                        <label class="consent-form__checkbox">
+                            <input type="checkbox" name="consent" value="1" required>
+                            <span>
+                                Je soussigné·e <strong>{{ personnalite.fullName }}</strong>, autorise l'utilisation
+                                de mon nom et de mon image dans le cadre de la campagne « Hisse ton Drapeau »,
+                                conformément aux informations ci-dessus.
+                            </span>
+                        </label>
+                        <button type="submit" class="btn btn--primary">Je confirme mon consentement</button>
+                    </form>
+                {% endif %}
+
+                <p class="legal-updated">
+                    Lien personnel — merci de ne pas le partager. Une question ? Contactez-nous via la page
+                    <a href="{{ path('app_contact') }}">Contacts</a>.
+                </p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

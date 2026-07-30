@@ -1171,6 +1171,43 @@ a.hero__tile:focus-visible {
     color: var(--color-gray-600);
 }
 
+/* Consent page (consentement personnalités) */
+.consent-status {
+    margin: 24px 0;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    background: #e4f5ea;
+    color: #1d6b3f;
+}
+
+.consent-form {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.consent-form__checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    line-height: 1.6;
+}
+
+.consent-form__checkbox input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--color-green-900);
+}
+
+.consent-form .btn {
+    align-self: flex-start;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .site-footer__inner {
@@ -1369,6 +1406,32 @@ a.hero__tile:focus-visible {
 .admin-table__role {
     max-width: 320px;
     color: var(--color-gray-600);
+}
+
+.admin-consent {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-consent--yes {
+    color: #1d6b3f;
+}
+
+.admin-consent--no {
+    color: var(--color-gray-600);
+}
+
+.admin-consent__link {
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-green-900);
+}
+
+.admin-consent__link:hover {
+    color: var(--color-yellow-dark);
 }
 
 .admin-table__actions {

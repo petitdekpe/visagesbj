@@ -53,6 +53,18 @@ class Personnalite
     #[ORM\Column]
     private int $position = 0;
 
+    #[ORM\Column]
+    private bool $consentAccepted = false;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $consentedAt = null;
+
+    #[ORM\Column(length: 45, nullable: true)]
+    private ?string $consentIp = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $consentUserAgent = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,6 +179,54 @@ class Personnalite
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function isConsentAccepted(): bool
+    {
+        return $this->consentAccepted;
+    }
+
+    public function setConsentAccepted(bool $consentAccepted): static
+    {
+        $this->consentAccepted = $consentAccepted;
+
+        return $this;
+    }
+
+    public function getConsentedAt(): ?\DateTimeImmutable
+    {
+        return $this->consentedAt;
+    }
+
+    public function setConsentedAt(?\DateTimeImmutable $consentedAt): static
+    {
+        $this->consentedAt = $consentedAt;
+
+        return $this;
+    }
+
+    public function getConsentIp(): ?string
+    {
+        return $this->consentIp;
+    }
+
+    public function setConsentIp(?string $consentIp): static
+    {
+        $this->consentIp = $consentIp;
+
+        return $this;
+    }
+
+    public function getConsentUserAgent(): ?string
+    {
+        return $this->consentUserAgent;
+    }
+
+    public function setConsentUserAgent(?string $consentUserAgent): static
+    {
+        $this->consentUserAgent = $consentUserAgent;
 
         return $this;
     }

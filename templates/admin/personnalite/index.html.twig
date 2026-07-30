@@ -31,6 +31,7 @@
                             <th>Fichier attendu</th>
                             <th>Rôle</th>
                             <th>Position</th>
+                            <th>Consentement</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -44,6 +45,14 @@
                                 <td><code>{{ personnalite.slug }}.jpg</code></td>
                                 <td class="admin-table__role">{{ personnalite.role|default('—') }}</td>
                                 <td>{{ personnalite.position }}</td>
+                                <td>
+                                    {% if personnalite.consentAccepted %}
+                                        <span class="admin-consent admin-consent--yes" title="{{ personnalite.consentedAt|date('d/m/Y H:i') }} — {{ personnalite.consentIp }}">Oui, {{ personnalite.consentedAt|date('d/m/Y') }}</span>
+                                    {% else %}
+                                        <span class="admin-consent admin-consent--no">Non</span>
+                                    {% endif %}
+                                    <a href="{{ url('app_personnalites_consent', { slug: personnalite.slug }) }}" target="_blank" rel="noopener noreferrer" class="admin-consent__link">Lien</a>
+                                </td>
                                 <td class="admin-table__actions">
                                     <a href="{{ path('admin_personnalites_edit', { id: personnalite.id }) }}">Modifier</a>
                                     <form method="post" action="{{ path('admin_personnalites_delete', { id: personnalite.id }) }}"
