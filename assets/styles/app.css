@@ -1877,3 +1877,80 @@ a.hero__tile:focus-visible {
 .driver-popover-close-btn:focus {
     color: var(--color-green-900);
 }
+
+/* Gallery (/galerie) — infinite 2D archive photo wall, test page */
+.gallery-viewport {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 103px); /* 103px = .site-header's real rendered height, measured — the 80px shorthand used elsewhere in this file is close but leaves a few px of dead scroll on this page, where an exact fit matters */
+    height: calc(100dvh - 103px); /* accounts for mobile browsers' collapsing address bar; ignored by browsers that don't support dvh */
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    background: var(--color-gray-100);
+}
+
+.gallery-viewport:focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: -3px;
+}
+
+.gallery-world {
+    position: relative;
+    will-change: transform;
+}
+
+.gallery-cell {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-gray-200);
+    margin: 0;
+    backface-visibility: hidden;
+}
+
+.gallery-cell__link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.gallery-cell__link:focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: -3px;
+}
+
+.gallery-cell img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(.4) saturate(.65) contrast(1.05);
+    -webkit-user-drag: none;
+}
+
+.gallery-cell figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px 10px 8px;
+    background: linear-gradient(to top, rgba(0, 0, 0, .8), rgba(0, 0, 0, 0));
+    color: var(--color-white);
+    font-size: 12px;
+    line-height: 1.35;
+    opacity: 0;
+    transition: opacity .2s ease;
+    pointer-events: none;
+}
+
+.gallery-cell:hover figcaption,
+.gallery-cell:focus-within figcaption {
+    opacity: 1;
+}

@@ -17,10 +17,14 @@ import { Controller } from '@hotwired/stimulus';
  * anywhere on the page — not just a click on this button specifically — so
  * it feels immediate rather than requiring them to find and press play.
  */
+const VOLUME = 0.5;
+
 export default class extends Controller {
     static targets = ['audio', 'button', 'label'];
 
     connect() {
+        this.audioTarget.volume = VOLUME;
+
         this.onPlay = this.onPlay.bind(this);
         this.onPause = this.onPause.bind(this);
         this.audioTarget.addEventListener('play', this.onPlay);

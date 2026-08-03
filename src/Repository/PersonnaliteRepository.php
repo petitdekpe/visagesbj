@@ -81,6 +81,23 @@ class PersonnaliteRepository extends ServiceEntityRepository
         return array_slice($others, 0, $limit);
     }
 
+    /**
+     * Visible personnalités with an actual photo on file — used by the
+     * /galerie infinite wall, which has nothing to show for someone without one.
+     *
+     * @return Personnalite[]
+     */
+    public function findVisibleWithPhoto(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.visible = true')
+            ->andWhere('p.photo IS NOT NULL')
+            ->orderBy('p.position', 'ASC')
+            ->addOrderBy('p.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function countWithoutPhoto(): int
     {
         return (int) $this->createQueryBuilder('p')

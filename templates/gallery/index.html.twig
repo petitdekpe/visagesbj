@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie d'archives — Hisse ton Drapeau{% endblock %}
+{% block meta_description %}Galerie de photographies d'archive du Bénin, un mur infini défilant dans toutes les directions — musée numérique de la campagne Hisse ton Drapeau.{% endblock %}
+
+{% block body %}
+    <h1 class="sr-only">Galerie d'archives — mur infini de photographies, Hisse ton Drapeau</h1>
+
+    <div
+        class="gallery-viewport"
+        data-controller="gallery"
+        data-gallery-photos-value="{{ photosJson|e('html_attr') }}"
+        tabindex="0"
+        role="group"
+        aria-label="Galerie infinie de photographies d'archive, défilement libre dans toutes les directions"
+    ></div>
+{% endblock %}
