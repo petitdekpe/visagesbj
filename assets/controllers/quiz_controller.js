@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { trackEvent } from '../analytics.js';
 
 /*
  * Game-show style quiz player. All 20 questions (with their correct answer)
@@ -100,5 +101,7 @@ export default class extends Controller {
 
         this.resultTitleTarget.textContent = title;
         this.resultScoreTarget.textContent = `Score final : ${this.score}/${total}`;
+
+        trackEvent('quiz_completed', { score: this.score, total });
     }
 }

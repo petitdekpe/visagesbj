@@ -41,6 +41,21 @@
                     {{ form_errors(form.publicationDirector) }}
                 </div>
 
+                <p class="admin-form__section-label">Google Analytics</p>
+
+                <div class="admin-form__field admin-form__field--checkbox">
+                    {{ form_widget(form.gaEnabled) }}
+                    {{ form_label(form.gaEnabled) }}
+                </div>
+                {{ form_help(form.gaEnabled) }}
+
+                <div class="admin-form__field">
+                    {{ form_label(form.gaMeasurementId) }}
+                    {{ form_widget(form.gaMeasurementId) }}
+                    {{ form_help(form.gaMeasurementId) }}
+                    {{ form_errors(form.gaMeasurementId) }}
+                </div>
+
                 <div class="admin-form__actions">
                     <button type="submit" class="btn btn--primary">Enregistrer</button>
                 </div>

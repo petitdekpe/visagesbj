@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { trackEvent } from '../analytics.js';
 
 /*
  * A play button that only starts audio once the user explicitly clicks it —
@@ -43,6 +44,7 @@ export default class extends Controller {
     toggle() {
         if (this.audioTarget.paused) {
             this.audioTarget.play().catch(() => {});
+            trackEvent('anthem_play');
         } else {
             this.audioTarget.pause();
         }
@@ -59,6 +61,7 @@ export default class extends Controller {
             // we don't immediately re-toggle (and stop) the audio it just started.
             if (!this.buttonTarget.contains(event.target) && this.audioTarget.paused) {
                 this.audioTarget.play().catch(() => {});
+                trackEvent('anthem_play');
             }
             this.disarmAutoplay();
         };

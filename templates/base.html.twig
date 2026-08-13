@@ -57,5 +57,9 @@
 
         {% include '_partials/footer.html.twig' %}
         {% include '_partials/audio_player.html.twig' %}
+
+        {% if site_settings().gaConfigured %}
+            {% include '_partials/cookie_consent.html.twig' with { measurement_id: site_settings().gaMeasurementId } %}
+        {% endif %}
     </body>
 </html>

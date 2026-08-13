@@ -45,6 +45,13 @@
                         un <strong>cookie technique</strong> de sécurité (protection contre les attaques CSRF), utilisé
                         uniquement lors de l'utilisation des formulaires de l'espace d'administration du site.
                     </li>
+                    {% if settings.gaConfigured %}
+                        <li>
+                            un <strong>cookie de mesure d'audience</strong> (Google Analytics), déposé uniquement
+                            après que vous avez accepté le bandeau de consentement affiché lors de votre première
+                            visite.
+                        </li>
+                    {% endif %}
                 </ul>
                 <p>
                     Si un formulaire de contact ou une inscription à une newsletter venait à être ajouté, la présente
@@ -89,6 +96,13 @@
                         renforcée) : lecture du clip de l'hymne de la campagne, chargée uniquement après un clic
                         explicite du visiteur sur le bouton de lecture.
                     </li>
+                    {% if settings.gaConfigured %}
+                        <li>
+                            <strong>Google Analytics</strong> (Google Ireland Limited) : mesure d'audience du site
+                            (pages consultées, provenance des visiteurs, actions réalisées sur le site), chargée
+                            uniquement après acceptation du bandeau de consentement.
+                        </li>
+                    {% endif %}
                 </ul>
                 <p>
                     Ces services sont soumis à leurs propres politiques de confidentialité, disponibles sur les
@@ -103,6 +117,15 @@
                     aucun suivi publicitaire ni à aucune finalité statistique et n'est pas déposé lors d'une simple
                     navigation sur les pages publiques du site.
                 </p>
+                {% if settings.gaConfigured %}
+                    <p>
+                        Le site utilise également <strong>Google Analytics</strong> à des fins de mesure d'audience.
+                        Les cookies déposés par ce service ne le sont qu'après avoir donné votre accord via le
+                        bandeau affiché lors de votre première visite. Vous pouvez revenir sur ce choix à tout moment
+                        en effaçant les cookies de votre navigateur : le bandeau vous sera présenté à nouveau lors de
+                        votre prochaine visite.
+                    </p>
+                {% endif %}
 
                 <h2>8. Durée de conservation</h2>
                 <p>
@@ -110,6 +133,10 @@
                     nécessaire aux finalités de sécurité mentionnées ci-dessus, conformément aux durées habituellement
                     pratiquées par les hébergeurs. Le cookie de sécurité CSRF est temporaire et supprimé à l'issue de
                     la soumission du formulaire concerné.
+                    {%- if settings.gaConfigured %}
+                        Les cookies de Google Analytics, lorsque vous les avez acceptés, sont conservés selon les
+                        durées définies par défaut par ce service.
+                    {%- endif %}
                 </p>
 
                 <h2>9. Sécurité des données</h2>

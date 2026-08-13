@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { trackEvent } from '../analytics.js';
 
 /*
  * Copy-link button on the personality detail page's share row. Falls back to
@@ -20,7 +21,10 @@ export default class extends Controller {
     copyLink(event) {
         const url = event.currentTarget.dataset.clipboardText;
 
-        this.copyToClipboard(url).then(() => this.showCopied());
+        this.copyToClipboard(url).then(() => {
+            this.showCopied();
+            trackEvent('share_link_copy', { link_url: url });
+        });
     }
 
     copyToClipboard(text) {
