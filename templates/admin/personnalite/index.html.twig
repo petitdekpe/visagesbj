@@ -22,10 +22,15 @@
                 (ajoute <code>--dry-run</code> pour prévisualiser sans rien modifier).
             </p>
 
-            <div class="admin-table-wrap">
+            <div class="admin-table-wrap" data-controller="admin-reorder">
+                <form method="post" action="{{ path('admin_personnalites_reorder') }}" data-admin-reorder-target="form" hidden>
+                    <input type="hidden" name="_token" value="{{ csrf_token('reorder-personnalites') }}">
+                </form>
+
                 <table class="admin-table">
                     <thead>
                         <tr>
+                            <th></th>
                             <th></th>
                             <th>Nom</th>
                             <th>Fichier attendu</th>
@@ -38,7 +43,12 @@
                     </thead>
                     <tbody>
                         {% for personnalite in personnalites %}
-                            <tr class="{{ personnalite.visible ? '' : 'admin-table__row--hidden' }}">
+                            <tr class="{{ personnalite.visible ? '' : 'admin-table__row--hidden' }}"
+                                draggable="true"
+                                data-admin-reorder-target="row"
+                                data-id="{{ personnalite.id }}"
+                                data-action="dragstart->admin-reorder#dragStart dragover->admin-reorder#dragOver dragend->admin-reorder#dragEnd">
+                                <td class="admin-table__drag" title="Glisser pour réordonner" aria-hidden="true">⠿</td>
                                 <td class="admin-table__photo">
                                     <span class="admin-avatar">{{ m.avatar(personnalite) }}</span>
                                 </td>

@@ -88,6 +88,32 @@ class PersonnaliteAdminController extends AbstractController
         ]);
     }
 
+    #[Route('/reorder', name: 'reorder', methods: ['POST'])]
+    public function reorder(
+        Request $request,
+        PersonnaliteRepository $personnaliteRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        if ($this->isCsrfTokenValid('reorder-personnalites', $request->request->get('_token'))) {
+            $orderedIds = array_map('intval', $request->request->all('order'));
+            $personnalites = $personnaliteRepository->findBy(['id' => $orderedIds]);
+            $personnalitesById = [];
+            foreach ($personnalites as $personnalite) {
+                $personnalitesById[$personnalite->getId()] = $personnalite;
+            }
+
+            foreach ($orderedIds as $index => $id) {
+                if (isset($personnalitesById[$id])) {
+                    $personnalitesById[$id]->setPosition($index + 1);
+                }
+            }
+
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_personnalites_index');
+    }
+
     #[Route('/{id}/toggle-visibility', name: 'toggle_visibility', methods: ['POST'])]
     public function toggleVisibility(
         Request $request,

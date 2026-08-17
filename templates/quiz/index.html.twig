@@ -1,39 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quiz des 66 visages — Hisse ton Drapeau{% endblock %}
-{% block meta_description %}Testez vos connaissances sur les 66 visages béninois qui font la fierté du Bénin, avec le quiz de la campagne Hisse ton Drapeau.{% endblock %}
+{% block title %}Quiz des 66 visages — Hisse ton Drapeau
+{% endblock %}
+{% block meta_description %}Testez vos connaissances sur les 66 visages béninois qui font la fierté du Bénin, avec le quiz de la campagne Hisse ton Drapeau.
+{% endblock %}
 
 {% block body %}
-    <header class="page-header">
-        <div class="container">
-            <h1 class="section-title">Le Quiz des 66 visages</h1>
-            <p>Combien de personnalités béninoises connaissez-vous vraiment ?</p>
-        </div>
-    </header>
+	<header class="page-header">
+		<div class="container">
+			<h1 class="section-title">Le Quiz des 66 visages</h1>
+			<p>Combien de personnalités béninoises connaissez-vous vraiment ?</p>
+		</div>
+	</header>
 
-    <div class="container">
-        <section class="section">
-            <div class="quiz-intro">
-                <div class="legal-content">
-                    <p>
-                        Le Bénin compte 66 personnalités qui incarnent, chacune à sa façon, la réussite et la fierté
-                        du pays à l'occasion de son 66<sup>e</sup> anniversaire d'indépendance. Le Quiz des 66
-                        visages vous invite à les (re)découvrir autrement : professions, origines, distinctions,
-                        anecdotes...
-                    </p>
-                    <p>
-                        À chaque partie, 20 questions sont tirées au sort dans notre banque de
-                        {{ totalQuestions }} questions, sans jamais se répéter au sein d'une même partie. Répondez
-                        vite et bien, comme dans un jeu télévisé — votre score s'affiche à la toute fin !
-                    </p>
-                </div>
+	<div class="container">
+		<section class="section">
+			<div class="quiz-intro">
+				<div class="legal-content">
+					<p>
+						À l'occasion du 66e anniversaire de l'indépendance, découvrez 66 figures qui incarnent la réussite et la fierté du Bénin. 
+						                        Testez vos connaissances avec le Quiz des 66 visages : 20 questions sur leur parcours, leurs origines et leurs anecdotes. 
+						                        Répondez vite et bien pour maximiser votre score !
+					</p>
+				</div>
 
-                {% if totalQuestions > 0 %}
-                    <a href="{{ path('app_quiz_play') }}" class="btn btn--primary quiz-start-btn">Lancer un quiz &rarr;</a>
-                {% else %}
-                    <p class="is-placeholder">Aucune question disponible pour le moment.</p>
-                {% endif %}
-            </div>
-        </section>
-    </div>
+				{% if totalQuestions > 0 %}
+					<a href="{{ path('app_quiz_play') }}" class="btn btn--primary quiz-start-btn">Lancer un quiz &rarr;</a>
+				{% else %}
+					<p class="is-placeholder">Aucune question disponible pour le moment.</p>
+				{% endif %}
+			</div>
+		</section>
+	</div>
 {% endblock %}

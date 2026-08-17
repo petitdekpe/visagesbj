@@ -172,11 +172,11 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 14px;
+    padding-block: 10px;
 }
 
 .site-header__brand img {
-    height: 74px;
+    height: 56px;
     width: auto;
 }
 
@@ -196,9 +196,13 @@ p {
     border-bottom: 2px solid transparent;
 }
 
-.site-nav a:hover,
-.site-nav a.is-active {
+.site-nav a:hover {
     color: var(--color-green-900);
+    border-color: var(--color-yellow);
+}
+
+.site-nav a.is-active {
+    color: var(--color-ink);
     border-color: var(--color-yellow);
 }
 
@@ -326,6 +330,7 @@ a.hero__tile:focus-visible {
 
 .section--alt {
     background: var(--color-gray-100);
+    padding-inline: 32px;
 }
 
 .section-heading {
@@ -1412,6 +1417,22 @@ a.hero__tile:focus-visible {
     opacity: .55;
 }
 
+.admin-table__drag {
+    width: 28px;
+    color: var(--color-gray-600);
+    font-size: 16px;
+    cursor: grab;
+    user-select: none;
+}
+
+.admin-table tr.is-dragging {
+    opacity: .4;
+}
+
+.admin-table tbody tr {
+    background: var(--color-white);
+}
+
 .admin-toggle {
     display: inline-flex;
     align-items: center;
@@ -1653,9 +1674,9 @@ a.hero__tile:focus-visible {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: var(--color-green-900);
-    color: var(--color-white);
-    border: none;
+    background: var(--color-yellow);
+    color: var(--color-green-900);
+    border: 2px solid var(--color-white);
     border-radius: var(--radius-full);
     padding: 12px 20px;
     font-family: var(--font-heading);
@@ -1667,7 +1688,7 @@ a.hero__tile:focus-visible {
 }
 
 .audio-consent__btn:hover {
-    background: var(--color-green-700);
+    background: var(--color-yellow-dark);
     transform: translateY(-1px);
 }
 
@@ -1681,7 +1702,7 @@ a.hero__tile:focus-visible {
 .audio-consent__bars span {
     display: block;
     width: 3px;
-    background: var(--color-yellow);
+    background: var(--color-green-900);
     border-radius: 2px;
     height: 4px;
 }
@@ -1995,8 +2016,8 @@ a.hero__tile:focus-visible {
 .gallery-viewport {
     position: relative;
     width: 100%;
-    height: calc(100vh - 103px); /* 103px = .site-header's real rendered height, measured — the 80px shorthand used elsewhere in this file is close but leaves a few px of dead scroll on this page, where an exact fit matters */
-    height: calc(100dvh - 103px); /* accounts for mobile browsers' collapsing address bar; ignored by browsers that don't support dvh */
+    height: calc(100vh - 77px); /* 77px = .site-header's real rendered height, measured — the 80px shorthand used elsewhere in this file is close but leaves a few px of dead scroll on this page, where an exact fit matters */
+    height: calc(100dvh - 77px); /* accounts for mobile browsers' collapsing address bar; ignored by browsers that don't support dvh */
     overflow: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
