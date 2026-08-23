@@ -6,6 +6,12 @@ import { Controller } from '@hotwired/stimulus';
  * the visitor clicks "Accepter". The choice is remembered in localStorage so
  * it survives across visits without needing a cookie of its own.
  *
+ * The banner itself always shows on first visit, even when GA isn't
+ * configured (measurementIdValue empty) — it's also the site's Article-12
+ * entry-point notice pointing to the privacy policy, so it can't be
+ * conditioned on analytics being on. In that case it just acknowledges
+ * ("J'ai compris") without touching analytics.
+ *
  * The banner is data-turbo-permanent so it (and any pending consent) isn't
  * lost across Turbo navigations. Turbo still detaches/reattaches permanent
  * elements on each visit, which re-runs connect() every time even though the
@@ -23,7 +29,9 @@ export default class extends Controller {
         const consent = window.localStorage.getItem(STORAGE_KEY);
 
         if (consent === 'granted') {
-            this.loadAnalytics();
+            if (this.measurementIdValue) {
+                this.loadAnalytics();
+            }
         } else if (consent !== 'denied') {
             this.element.classList.add('is-visible');
         }
@@ -32,12 +40,18 @@ export default class extends Controller {
     accept() {
         window.localStorage.setItem(STORAGE_KEY, 'granted');
         this.element.classList.remove('is-visible');
-        this.loadAnalytics();
+        if (this.measurementIdValue) {
+            this.loadAnalytics();
+        }
     }
 
     decline() {
         window.localStorage.setItem(STORAGE_KEY, 'denied');
         this.element.classList.remove('is-visible');
+    }
+
+    reopen() {
+        this.element.classList.add('is-visible');
     }
 
     loadAnalytics() {

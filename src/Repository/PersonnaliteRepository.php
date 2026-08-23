@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Personnalite;
+use App\Enum\PersonnaliteCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -96,6 +97,30 @@ class PersonnaliteRepository extends ServiceEntityRepository
             ->addOrderBy('p.lastName', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Categories actually assigned to at least one visible personnalité, in
+     * enum declaration order — drives the public filter chips so a category
+     * only ever appears once it's genuinely in use, never as an empty option.
+     *
+     * @return PersonnaliteCategory[]
+     */
+    public function findVisibleCategoriesInUse(): array
+    {
+        $rows = $this->createQueryBuilder('p')
+            ->select('DISTINCT p.category')
+            ->andWhere('p.visible = true')
+            ->andWhere('p.category IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+
+        $inUse = array_column($rows, 'category');
+
+        return array_values(array_filter(
+            PersonnaliteCategory::cases(),
+            static fn (PersonnaliteCategory $category) => in_array($category, $inUse, true)
+        ));
     }
 
     public function countWithoutPhoto(): int

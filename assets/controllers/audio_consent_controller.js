@@ -17,8 +17,22 @@ import { trackEvent } from '../analytics.js';
  * listener that starts playback on the visitor's very first interaction
  * anywhere on the page — not just a click on this button specifically — so
  * it feels immediate rather than requiring them to find and press play.
+ *
+ * The card promoting the anthem (cover photo + dismiss button) is only
+ * useful once, at arrival — kept up while scrolling, it just sits on top of
+ * whatever's underneath. So it collapses to the bare icon+label pill (same
+ * toggle button, cover photo dropped) as soon as the visitor scrolls or
+ * dismisses it, and it never expands in the first place on a page like the
+ * quiz where the full card would sit over the answer options.
+ *
+ * The whole floating widget also hides once the footer scrolls into view —
+ * being fixed-position, it would otherwise sit on top of the footer's links
+ * for as long as the visitor stays scrolled to the bottom of the page. The
+ * footer itself isn't a turbo-permanent element (unlike this player), so its
+ * reference is re-looked-up on every connect().
  */
 const VOLUME = 0.5;
+const COLLAPSE_SCROLL_THRESHOLD = 120;
 
 export default class extends Controller {
     static targets = ['audio', 'button', 'label'];
@@ -28,9 +42,25 @@ export default class extends Controller {
 
         this.onPlay = this.onPlay.bind(this);
         this.onPause = this.onPause.bind(this);
+        this.onMediaPlaying = this.onMediaPlaying.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+        this.onFooterIntersect = this.onFooterIntersect.bind(this);
         this.audioTarget.addEventListener('play', this.onPlay);
         this.audioTarget.addEventListener('pause', this.onPause);
+        document.addEventListener('media:playing', this.onMediaPlaying);
         this.syncState();
+
+        if (document.querySelector('.quiz-stage')) {
+            this.collapse();
+        } else if (!this.element.classList.contains('is-collapsed')) {
+            window.addEventListener('scroll', this.onScroll, { passive: true });
+        }
+
+        const footer = document.querySelector('.site-footer');
+        if (footer) {
+            this.footerObserver = new IntersectionObserver(this.onFooterIntersect);
+            this.footerObserver.observe(footer);
+        }
 
         this.armAutoplayOnHome();
     }
@@ -38,7 +68,27 @@ export default class extends Controller {
     disconnect() {
         this.audioTarget.removeEventListener('play', this.onPlay);
         this.audioTarget.removeEventListener('pause', this.onPause);
+        document.removeEventListener('media:playing', this.onMediaPlaying);
+        window.removeEventListener('scroll', this.onScroll);
+        if (this.footerObserver) {
+            this.footerObserver.disconnect();
+        }
         this.disarmAutoplay();
+    }
+
+    onFooterIntersect([entry]) {
+        this.element.classList.toggle('is-hidden', entry.isIntersecting);
+    }
+
+    onScroll() {
+        if (window.scrollY > COLLAPSE_SCROLL_THRESHOLD) {
+            this.collapse();
+        }
+    }
+
+    collapse() {
+        this.element.classList.add('is-collapsed');
+        window.removeEventListener('scroll', this.onScroll);
     }
 
     toggle() {
@@ -92,12 +142,21 @@ export default class extends Controller {
     onPlay() {
         this.buttonTarget.setAttribute('aria-pressed', 'true');
         this.buttonTarget.classList.add('is-playing');
+        this.buttonTarget.setAttribute('aria-label', "Couper le son de l'hymne de la campagne Hisse ton Drapeau");
         this.labelTarget.textContent = 'Couper le son';
+        document.dispatchEvent(new CustomEvent('media:playing', { detail: { source: 'audio' } }));
+    }
+
+    onMediaPlaying(event) {
+        if (event.detail.source !== 'audio' && !this.audioTarget.paused) {
+            this.audioTarget.pause();
+        }
     }
 
     onPause() {
         this.buttonTarget.setAttribute('aria-pressed', 'false');
         this.buttonTarget.classList.remove('is-playing');
+        this.buttonTarget.setAttribute('aria-label', "Écouter l'hymne officiel de la campagne Hisse ton Drapeau");
         this.labelTarget.textContent = "Écouter l'hymne";
     }
 }

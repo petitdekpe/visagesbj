@@ -1,11 +1,20 @@
-<div class="cookie-consent" id="cookie-consent" data-turbo-permanent data-controller="cookie-consent" data-cookie-consent-measurement-id-value="{{ measurement_id }}">
+<div class="cookie-consent" id="cookie-consent" data-turbo-permanent data-controller="cookie-consent" data-cookie-consent-measurement-id-value="{{ measurement_id }}" data-action="cookie-consent:reopen@window->cookie-consent#reopen">
     <p class="cookie-consent__text">
-        Ce site utilise Google Analytics pour mesurer sa fréquentation et comprendre comment il est utilisé.
-        Ces cookies ne sont déposés qu'avec votre accord. Voir notre
+        {% if measurement_id %}
+            Ce site utilise Google Analytics pour mesurer sa fréquentation et comprendre comment il est utilisé.
+            Ces cookies ne sont déposés qu'avec votre accord. Voir notre
+        {% else %}
+            En poursuivant votre navigation, vous prenez connaissance de nos conditions générales d'utilisation
+            et de notre
+        {% endif %}
         <a href="{{ path('app_privacy') }}#cookies">politique de confidentialité</a>.
     </p>
     <div class="cookie-consent__actions">
-        <button type="button" class="cookie-consent__btn cookie-consent__btn--decline" data-action="cookie-consent#decline">Refuser</button>
-        <button type="button" class="cookie-consent__btn cookie-consent__btn--accept" data-action="cookie-consent#accept">Accepter</button>
+        {% if measurement_id %}
+            <button type="button" class="cookie-consent__btn cookie-consent__btn--decline" data-action="cookie-consent#decline">Refuser</button>
+            <button type="button" class="cookie-consent__btn cookie-consent__btn--accept" data-action="cookie-consent#accept">Accepter</button>
+        {% else %}
+            <button type="button" class="cookie-consent__btn cookie-consent__btn--accept" data-action="cookie-consent#accept">J'ai compris</button>
+        {% endif %}
     </div>
 </div>

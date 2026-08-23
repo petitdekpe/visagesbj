@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import '_macros/personnalite.html.twig' as m %}
 
-{% block title %}66 visages du Bénin — Hisse ton Drapeau{% endblock %}
+{% block title %}66 visages du Bénin | Hisse ton Drapeau{% endblock %}
 {% block meta_description %}Découvrez les personnalités béninoises qui incarnent la réussite et la fierté du Bénin dans le cadre de la campagne Hisse ton Drapeau.{% endblock %}
 
 {% block body %}
@@ -22,10 +22,38 @@
                     type="search"
                     class="personnalites-search__input"
                     placeholder="Rechercher un nom, un métier..."
-                    aria-label="Rechercher parmi les 66 visages"
+                    aria-label="Rechercher parmi les {{ personnalites|length }} visages"
                     data-personnalite-search-target="input"
                     data-action="input->personnalite-search#filter"
                 >
+
+                {% if categories|length > 0 %}
+                    <div class="personnalites-filters" role="group" aria-label="Filtrer par catégorie">
+                        {% for category in categories %}
+                            <button
+                                type="button"
+                                class="personnalites-filters__chip"
+                                data-category="{{ category.value }}"
+                                data-personnalite-search-target="category"
+                                data-action="click->personnalite-search#toggleCategory"
+                                aria-pressed="false"
+                            >{{ category.label }}</button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="personnalites-search__status">
+                    <p class="personnalites-search__count" data-personnalite-search-target="count" aria-live="polite">
+                        {{ personnalites|length }} personnalités
+                    </p>
+                    <button
+                        type="button"
+                        class="personnalites-search__reset"
+                        data-personnalite-search-target="reset"
+                        data-action="click->personnalite-search#reset"
+                        hidden
+                    >Réinitialiser les filtres</button>
+                </div>
             </div>
 
             <div class="personnalites-grid" data-personnalite-search-target="grid">
@@ -34,9 +62,12 @@
                 {% endfor %}
             </div>
 
-            <p class="personnalites-search__empty" data-personnalite-search-target="empty" hidden>
-                Aucun résultat pour cette recherche.
-            </p>
+            <div class="personnalites-search__empty" data-personnalite-search-target="empty" hidden>
+                <p data-personnalite-search-target="emptyMessage">Aucun résultat pour cette recherche.</p>
+                <button type="button" class="personnalites-search__reset personnalites-search__reset--empty" data-action="click->personnalite-search#reset">
+                    Réinitialiser les filtres
+                </button>
+            </div>
         </section>
     </div>
 {% endblock %}

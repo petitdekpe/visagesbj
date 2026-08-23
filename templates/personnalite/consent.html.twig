@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Consentement — {{ personnalite.fullName }} — Hisse ton Drapeau{% endblock %}
+{% block title %}Consentement | {{ personnalite.fullName }} | Hisse ton Drapeau{% endblock %}
 {% block meta_description %}Formulaire de consentement à l'utilisation du nom et de l'image de {{ personnalite.fullName }} dans le cadre de la campagne Hisse ton Drapeau.{% endblock %}
 
 {% block body %}
     <header class="page-header">
         <div class="container">
             <h1 class="section-title">Consentement</h1>
-            <p>Autorisation d'utilisation du nom et de l'image — {{ personnalite.fullName }}</p>
+            <p>Autorisation d'utilisation du nom et de l'image de {{ personnalite.fullName }}</p>
         </div>
     </header>
 
@@ -29,7 +29,7 @@
                     ultérieure.
                 </p>
                 <p>
-                    Ce recueil de consentement est réalisé conformément à la <strong>loi n° 2009-09 du 27 août 2009
+                    Ce recueil de consentement est réalisé conformément à la <strong>loi n° 2009-09 du 22 mai 2009
                     portant protection des données à caractère personnel</strong> en République du Bénin et aux
                     exigences de l'<strong>Autorité de Protection des Données Personnelles (APDP)</strong>. Vous
                     pouvez retirer ce consentement à tout moment en écrivant via la page
@@ -58,7 +58,7 @@
                 {% endif %}
 
                 <p class="legal-updated">
-                    Lien personnel — merci de ne pas le partager. Une question ? Contactez-nous via la page
+                    Ce lien est personnel : merci de ne pas le partager. Une question ? Contactez-nous via la page
                     <a href="{{ path('app_contact') }}">Contacts</a>.
                 </p>
             </div>

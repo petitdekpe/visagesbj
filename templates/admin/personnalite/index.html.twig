@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import '_macros/personnalite.html.twig' as m %}
 
-{% block title %}Admin — Personnalités{% endblock %}
+{% block title %}Admin | Personnalités{% endblock %}
 
 {% block body %}
     {% include 'admin/_nav.html.twig' %}
@@ -15,14 +15,28 @@
 
             <p class="admin-hint">
                 Pour ajouter des photos en masse : dépose des fichiers nommés
-                <code>{slug}.jpg</code> (ou .png/.webp — le slug de chacun·e est dans
+                <code>{slug}.jpg</code> (ou .png/.webp : le slug de chacun·e est dans
                 la colonne <strong>Fichier attendu</strong> ci-dessous) dans
                 <code>var/photos-import/</code>, puis lance
                 <code>php bin/console app:personnalites:photos:import</code>
                 (ajoute <code>--dry-run</code> pour prévisualiser sans rien modifier).
             </p>
 
-            <div class="admin-table-wrap" data-controller="admin-reorder">
+            <div class="admin-table-wrap" data-controller="admin-reorder admin-personnalite-search">
+                <div class="admin-table-toolbar">
+                    <input
+                        type="search"
+                        class="admin-table-toolbar__search"
+                        placeholder="Rechercher un nom, un rôle, une catégorie..."
+                        aria-label="Rechercher parmi les personnalités"
+                        data-admin-personnalite-search-target="input"
+                        data-action="input->admin-personnalite-search#filter"
+                    >
+                    <span class="admin-table-toolbar__count" data-admin-personnalite-search-target="count">
+                        {{ personnalites|length }} personnalités
+                    </span>
+                </div>
+
                 <form method="post" action="{{ path('admin_personnalites_reorder') }}" data-admin-reorder-target="form" hidden>
                     <input type="hidden" name="_token" value="{{ csrf_token('reorder-personnalites') }}">
                 </form>
@@ -34,6 +48,7 @@
                             <th></th>
                             <th>Nom</th>
                             <th>Fichier attendu</th>
+                            <th>Catégorie</th>
                             <th>Rôle</th>
                             <th>Position</th>
                             <th>Affiché</th>
@@ -46,6 +61,8 @@
                             <tr class="{{ personnalite.visible ? '' : 'admin-table__row--hidden' }}"
                                 draggable="true"
                                 data-admin-reorder-target="row"
+                                data-admin-personnalite-search-target="row"
+                                data-search="{{ (personnalite.fullName ~ ' ' ~ personnalite.role ~ ' ' ~ (personnalite.category ? personnalite.category.label : ''))|lower }}"
                                 data-id="{{ personnalite.id }}"
                                 data-action="dragstart->admin-reorder#dragStart dragover->admin-reorder#dragOver dragend->admin-reorder#dragEnd">
                                 <td class="admin-table__drag" title="Glisser pour réordonner" aria-hidden="true">⠿</td>
@@ -54,6 +71,7 @@
                                 </td>
                                 <td>{{ personnalite.fullName }}</td>
                                 <td><code>{{ personnalite.slug }}.jpg</code></td>
+                                <td>{{ personnalite.category ? personnalite.category.label : '—' }}</td>
                                 <td class="admin-table__role">{{ personnalite.role|default('—') }}</td>
                                 <td>{{ personnalite.position }}</td>
                                 <td>
@@ -67,7 +85,7 @@
                                 </td>
                                 <td>
                                     {% if personnalite.consentAccepted %}
-                                        <span class="admin-consent admin-consent--yes" title="{{ personnalite.consentedAt|date('d/m/Y H:i') }} — {{ personnalite.consentIp }}">Oui, {{ personnalite.consentedAt|date('d/m/Y') }}</span>
+                                        <span class="admin-consent admin-consent--yes" title="{{ personnalite.consentedAt|date('d/m/Y H:i') }} · {{ personnalite.consentIp }}">Oui, {{ personnalite.consentedAt|date('d/m/Y') }}</span>
                                     {% else %}
                                         <span class="admin-consent admin-consent--no">Non</span>
                                     {% endif %}
@@ -86,6 +104,10 @@
                         {% endfor %}
                     </tbody>
                 </table>
+
+                <p class="admin-table__empty" data-admin-personnalite-search-target="empty" hidden>
+                    Aucune personnalité ne correspond à cette recherche.
+                </p>
             </div>
         </section>
     </div>

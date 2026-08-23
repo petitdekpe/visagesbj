@@ -17,6 +17,7 @@ class PersonnaliteController extends AbstractController
     {
         return $this->render('personnalite/index.html.twig', [
             'personnalites' => $personnaliteRepository->findVisibleOrdered(),
+            'categories' => $personnaliteRepository->findVisibleCategoriesInUse(),
         ]);
     }
 

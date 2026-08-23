@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\PersonnaliteCategory;
 use App\Repository\PersonnaliteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,8 +29,56 @@ class Personnalite
     #[Assert\Length(max: 255)]
     private ?string $role = null;
 
+    /**
+     * Active l'affichage éditorial structuré (Parcours / Contribution au
+     * Bénin / Rayonnement / Actualité / Sources) sur la fiche détail.
+     * false par défaut : affichage simple historique (paragraphe unique,
+     * Wikipédia + réalisations) tant qu'une personne n'a pas explicitement
+     * activé la nouvelle mise en page, même si les champs ci-dessous sont
+     * renseignés.
+     */
+    #[ORM\Column(options: ['default' => false])]
+    private bool $editorialEnabled = false;
+
+    /**
+     * Parcours de la personnalité (ex-champ "bio") : un paragraphe par ligne
+     * vide, mise en emphase via <strong>/<em> (rendu |raw dans le template).
+     */
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $bio = null;
+    private ?string $parcours = null;
+
+    /**
+     * Ce que la personnalité a concrètement apporté au Bénin. Même
+     * convention de mise en forme que le parcours.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $contributionBenin = null;
+
+    /**
+     * Rayonnement national/international de la personnalité. Même
+     * convention de mise en forme que le parcours.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $rayonnement = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $actualiteDate = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $actualiteText = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'Merci de renseigner une URL valide.')]
+    #[Assert\Length(max: 255)]
+    private ?string $actualiteUrl = null;
+
+    /**
+     * Assigned one person at a time via /admin — never guessed or bulk-derived
+     * (see App\Enum\PersonnaliteCategory). Null means "not yet classified",
+     * which is expected for most of the roster until curated.
+     */
+    #[ORM\Column(enumType: PersonnaliteCategory::class, nullable: true)]
+    private ?PersonnaliteCategory $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -46,6 +95,14 @@ class Personnalite
      */
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $achievements = null;
+
+    /**
+     * Sources / références citées, une par ligne : "Texte" ou
+     * "Texte | URL" — même format que les réalisations. Affichées en bas
+     * de la fiche détail.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $sources = null;
 
     #[ORM\Column(length: 180, unique: true)]
     private string $slug = '';
@@ -114,14 +171,98 @@ class Personnalite
         return $this;
     }
 
-    public function getBio(): ?string
+    public function isEditorialEnabled(): bool
     {
-        return $this->bio;
+        return $this->editorialEnabled;
     }
 
-    public function setBio(?string $bio): static
+    public function setEditorialEnabled(bool $editorialEnabled): static
     {
-        $this->bio = $bio;
+        $this->editorialEnabled = $editorialEnabled;
+
+        return $this;
+    }
+
+    public function getParcours(): ?string
+    {
+        return $this->parcours;
+    }
+
+    public function setParcours(?string $parcours): static
+    {
+        $this->parcours = $parcours;
+
+        return $this;
+    }
+
+    public function getContributionBenin(): ?string
+    {
+        return $this->contributionBenin;
+    }
+
+    public function setContributionBenin(?string $contributionBenin): static
+    {
+        $this->contributionBenin = $contributionBenin;
+
+        return $this;
+    }
+
+    public function getRayonnement(): ?string
+    {
+        return $this->rayonnement;
+    }
+
+    public function setRayonnement(?string $rayonnement): static
+    {
+        $this->rayonnement = $rayonnement;
+
+        return $this;
+    }
+
+    public function getActualiteDate(): ?\DateTimeImmutable
+    {
+        return $this->actualiteDate;
+    }
+
+    public function setActualiteDate(?\DateTimeImmutable $actualiteDate): static
+    {
+        $this->actualiteDate = $actualiteDate;
+
+        return $this;
+    }
+
+    public function getActualiteText(): ?string
+    {
+        return $this->actualiteText;
+    }
+
+    public function setActualiteText(?string $actualiteText): static
+    {
+        $this->actualiteText = $actualiteText;
+
+        return $this;
+    }
+
+    public function getActualiteUrl(): ?string
+    {
+        return $this->actualiteUrl;
+    }
+
+    public function setActualiteUrl(?string $actualiteUrl): static
+    {
+        $this->actualiteUrl = $actualiteUrl;
+
+        return $this;
+    }
+
+    public function getCategory(): ?PersonnaliteCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?PersonnaliteCategory $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
@@ -158,6 +299,18 @@ class Personnalite
     public function setAchievements(?string $achievements): static
     {
         $this->achievements = $achievements;
+
+        return $this;
+    }
+
+    public function getSources(): ?string
+    {
+        return $this->sources;
+    }
+
+    public function setSources(?string $sources): static
+    {
+        $this->sources = $sources;
 
         return $this;
     }

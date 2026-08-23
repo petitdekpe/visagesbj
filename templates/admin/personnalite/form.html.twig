@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin — {{ personnalite.id ? 'Modifier ' ~ personnalite.fullName : 'Ajouter une personnalité' }}{% endblock %}
+{% block title %}Admin | {{ personnalite.id ? 'Modifier ' ~ personnalite.fullName : 'Ajouter une personnalité' }}{% endblock %}
 
 {% block body %}
     {% include 'admin/_nav.html.twig' %}
@@ -39,10 +39,57 @@
                 </div>
 
                 <div class="admin-form__field">
-                    {{ form_label(form.bio) }}
-                    {{ form_widget(form.bio) }}
-                    {{ form_help(form.bio) }}
-                    {{ form_errors(form.bio) }}
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+                    {{ form_help(form.category) }}
+                    {{ form_errors(form.category) }}
+                </div>
+
+                <div class="admin-form__field admin-form__field--checkbox">
+                    {{ form_widget(form.editorialEnabled) }}
+                    {{ form_label(form.editorialEnabled) }}
+                </div>
+                {{ form_help(form.editorialEnabled) }}
+
+                <div class="admin-form__field">
+                    {{ form_label(form.parcours) }}
+                    {{ form_widget(form.parcours) }}
+                    {{ form_help(form.parcours) }}
+                    {{ form_errors(form.parcours) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.contributionBenin) }}
+                    {{ form_widget(form.contributionBenin) }}
+                    {{ form_help(form.contributionBenin) }}
+                    {{ form_errors(form.contributionBenin) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.rayonnement) }}
+                    {{ form_widget(form.rayonnement) }}
+                    {{ form_help(form.rayonnement) }}
+                    {{ form_errors(form.rayonnement) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.actualiteDate) }}
+                    {{ form_widget(form.actualiteDate) }}
+                    {{ form_errors(form.actualiteDate) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.actualiteText) }}
+                    {{ form_widget(form.actualiteText) }}
+                    {{ form_help(form.actualiteText) }}
+                    {{ form_errors(form.actualiteText) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.actualiteUrl) }}
+                    {{ form_widget(form.actualiteUrl) }}
+                    {{ form_help(form.actualiteUrl) }}
+                    {{ form_errors(form.actualiteUrl) }}
                 </div>
 
                 <div class="admin-form__field">
@@ -57,6 +104,13 @@
                     {{ form_widget(form.achievements) }}
                     {{ form_help(form.achievements) }}
                     {{ form_errors(form.achievements) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.sources) }}
+                    {{ form_widget(form.sources) }}
+                    {{ form_help(form.sources) }}
+                    {{ form_errors(form.sources) }}
                 </div>
 
                 <div class="admin-form__field">

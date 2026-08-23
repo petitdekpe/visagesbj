@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quiz en cours — Hisse ton Drapeau{% endblock %}
+{% block title %}Quiz en cours | Hisse ton Drapeau{% endblock %}
 
 {% block body %}
     <section class="quiz-stage" data-controller="quiz" data-quiz-questions-value="{{ questionsData|json_encode|e('html_attr') }}">
