@@ -957,6 +957,37 @@ a.hero__tile:focus-visible {
     color: var(--color-yellow);
 }
 
+.profile-hero__translate {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-hero__translate-btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    margin-bottom: var(--space-16);
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.profile-hero__translate-btn:hover,
+.profile-hero__translate-btn:focus-visible {
+    background: var(--color-yellow);
+    border-color: var(--color-yellow);
+    color: var(--color-green-900);
+}
+
 .profile-hero__wikipedia {
     flex: none;
     display: inline-flex;

@@ -25,6 +25,19 @@ class Personnalite
     #[Assert\Length(max: 150)]
     private string $lastName = '';
 
+    /**
+     * Traduction fongbe du prénom/nom, affichée par le bouton de bascule
+     * FR/fongbe sur la page détail (voir les champs *Fongbe plus bas).
+     * Vide par défaut : la fiche retombe alors sur firstName/lastName.
+     */
+    #[ORM\Column(length: 120, nullable: true)]
+    #[Assert\Length(max: 120)]
+    private ?string $firstNameFongbe = null;
+
+    #[ORM\Column(length: 150, nullable: true)]
+    #[Assert\Length(max: 150)]
+    private ?string $lastNameFongbe = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $role = null;
@@ -104,6 +117,34 @@ class Personnalite
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $sources = null;
 
+    /**
+     * Traduction fongbe des champs éditoriaux ci-dessus. Renseignés au cas
+     * par cas (actuellement seule la fiche de Fabroni Bill Yoclounon les
+     * utilise, via un bouton de bascule FR/fongbe sur sa page détail) —
+     * quand un champ est vide, la fiche retombe sur le texte français.
+     */
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
+    private ?string $roleFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $parcoursFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $contributionBeninFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $rayonnementFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $actualiteTextFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $achievementsFongbe = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $sourcesFongbe = null;
+
     #[ORM\Column(length: 180, unique: true)]
     private string $slug = '';
 
@@ -157,6 +198,30 @@ class Personnalite
     public function getFullName(): string
     {
         return trim($this->firstName.' '.$this->lastName);
+    }
+
+    public function getFirstNameFongbe(): ?string
+    {
+        return $this->firstNameFongbe;
+    }
+
+    public function setFirstNameFongbe(?string $firstNameFongbe): static
+    {
+        $this->firstNameFongbe = $firstNameFongbe;
+
+        return $this;
+    }
+
+    public function getLastNameFongbe(): ?string
+    {
+        return $this->lastNameFongbe;
+    }
+
+    public function setLastNameFongbe(?string $lastNameFongbe): static
+    {
+        $this->lastNameFongbe = $lastNameFongbe;
+
+        return $this;
     }
 
     public function getRole(): ?string
@@ -311,6 +376,90 @@ class Personnalite
     public function setSources(?string $sources): static
     {
         $this->sources = $sources;
+
+        return $this;
+    }
+
+    public function getRoleFongbe(): ?string
+    {
+        return $this->roleFongbe;
+    }
+
+    public function setRoleFongbe(?string $roleFongbe): static
+    {
+        $this->roleFongbe = $roleFongbe;
+
+        return $this;
+    }
+
+    public function getParcoursFongbe(): ?string
+    {
+        return $this->parcoursFongbe;
+    }
+
+    public function setParcoursFongbe(?string $parcoursFongbe): static
+    {
+        $this->parcoursFongbe = $parcoursFongbe;
+
+        return $this;
+    }
+
+    public function getContributionBeninFongbe(): ?string
+    {
+        return $this->contributionBeninFongbe;
+    }
+
+    public function setContributionBeninFongbe(?string $contributionBeninFongbe): static
+    {
+        $this->contributionBeninFongbe = $contributionBeninFongbe;
+
+        return $this;
+    }
+
+    public function getRayonnementFongbe(): ?string
+    {
+        return $this->rayonnementFongbe;
+    }
+
+    public function setRayonnementFongbe(?string $rayonnementFongbe): static
+    {
+        $this->rayonnementFongbe = $rayonnementFongbe;
+
+        return $this;
+    }
+
+    public function getActualiteTextFongbe(): ?string
+    {
+        return $this->actualiteTextFongbe;
+    }
+
+    public function setActualiteTextFongbe(?string $actualiteTextFongbe): static
+    {
+        $this->actualiteTextFongbe = $actualiteTextFongbe;
+
+        return $this;
+    }
+
+    public function getAchievementsFongbe(): ?string
+    {
+        return $this->achievementsFongbe;
+    }
+
+    public function setAchievementsFongbe(?string $achievementsFongbe): static
+    {
+        $this->achievementsFongbe = $achievementsFongbe;
+
+        return $this;
+    }
+
+    public function getSourcesFongbe(): ?string
+    {
+        return $this->sourcesFongbe;
+    }
+
+    public function setSourcesFongbe(?string $sourcesFongbe): static
+    {
+        $this->sourcesFongbe = $sourcesFongbe;
 
         return $this;
     }

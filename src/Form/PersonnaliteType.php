@@ -116,6 +116,59 @@ class PersonnaliteType extends AbstractType
                     .'Références citées pour le parcours, la contribution et le rayonnement.',
                 'help_html' => true,
             ])
+            ->add('firstNameFongbe', TextType::class, [
+                'label' => 'Traduction fongbe — Prénom',
+                'required' => false,
+                'help' => 'Optionnel. N\'est utilisé que sur les fiches où le bouton de bascule '
+                    .'FR/fongbe est actif. Laisser vide pour retomber sur le prénom français.',
+            ])
+            ->add('lastNameFongbe', TextType::class, [
+                'label' => 'Traduction fongbe — Nom',
+                'required' => false,
+                'help' => 'Laisser vide pour retomber sur le nom français.',
+            ])
+            ->add('roleFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Rôle',
+                'required' => false,
+                'attr' => ['rows' => 2],
+                'help' => 'Optionnel. N\'est utilisé que sur les fiches où le bouton de bascule '
+                    .'FR/fongbe est actif. Laisser vide pour retomber sur le texte français.',
+            ])
+            ->add('parcoursFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Parcours',
+                'required' => false,
+                'attr' => ['rows' => 8],
+                'help' => 'Même convention de mise en forme que le parcours en français.',
+                'help_html' => true,
+            ])
+            ->add('contributionBeninFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Contribution au Bénin',
+                'required' => false,
+                'attr' => ['rows' => 6],
+            ])
+            ->add('rayonnementFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Rayonnement',
+                'required' => false,
+                'attr' => ['rows' => 6],
+            ])
+            ->add('actualiteTextFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Actualité',
+                'required' => false,
+                'attr' => ['rows' => 3],
+            ])
+            ->add('achievementsFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Réalisations / distinctions',
+                'required' => false,
+                'attr' => ['rows' => 4],
+                'help' => 'Même format que les réalisations en français : une par ligne, '
+                    .'<code>Texte</code> ou <code>Texte | URL</code>.',
+                'help_html' => true,
+            ])
+            ->add('sourcesFongbe', TextareaType::class, [
+                'label' => 'Traduction fongbe — Sources',
+                'required' => false,
+                'attr' => ['rows' => 4],
+            ])
             ->add('position', IntegerType::class, [
                 'label' => 'Position (ordre d\'affichage, plus petit = affiché en premier)',
                 'required' => true,

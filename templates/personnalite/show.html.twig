@@ -16,6 +16,94 @@
     {% endif %}
 {% endmacro %}
 
+{% macro bio_section(data) %}
+    {% if data.editorialEnabled %}
+        <div class="profile-hero__bio">
+            {% if data.parcours %}
+                {{ _self.editorial_block('Parcours', data.parcours) }}
+            {% elseif data.role %}
+                <section class="profile-hero__block">
+                    <p>{{ data.role }}</p>
+                </section>
+            {% endif %}
+
+            {{ _self.editorial_block('Contribution au Bénin', data.contributionBenin) }}
+            {{ _self.editorial_block('Rayonnement', data.rayonnement) }}
+
+            {% if data.actualiteText %}
+                <section class="profile-hero__block profile-hero__actualite">
+                    <h2 class="profile-hero__block-title">Actualité</h2>
+                    {% if data.actualiteDate %}
+                        <time class="profile-hero__actualite-date" datetime="{{ data.actualiteDate|date('Y-m-d') }}">{{ data.actualiteDate|date('d/m/Y') }}</time>
+                    {% endif %}
+                    <p>{{ data.actualiteText }}</p>
+                    {% if data.actualiteUrl %}
+                        <a class="profile-hero__actualite-link" href="{{ data.actualiteUrl }}" target="_blank" rel="noopener noreferrer">Lire la suite &rarr;</a>
+                    {% endif %}
+                </section>
+            {% endif %}
+        </div>
+    {% else %}
+        {% if data.parcours %}
+            <div class="profile-hero__bio">
+                {% set paragraphs = data.parcours|replace({'\r\n': '\n', '\r': '\n'})|split('\n\n') %}
+                {% for paragraph in paragraphs %}
+                    {% if paragraph|trim is not empty %}
+                        <p>{{ paragraph|trim|raw }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% elseif data.role %}
+            <div class="profile-hero__bio">
+                <p>{{ data.role }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro achievements_list(text) %}
+    {% if text %}
+        {% set achievement_lines = text|replace({'\r\n': '\n', '\r': '\n'})|split('\n')|slice(0, 3) %}
+        <ul class="profile-hero__achievements">
+            {% for line in achievement_lines %}
+                {% if line|trim is not empty %}
+                    {% set parts = line|split('|') %}
+                    <li class="profile-hero__achievement">
+                        {% if parts[1] is defined and parts[1]|trim is not empty %}
+                            <a href="{{ parts[1]|trim }}" target="_blank" rel="noopener noreferrer">{{ parts[0]|trim }}</a>
+                        {% else %}
+                            {{ parts[0]|trim }}
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro sources_list(text) %}
+    {% if text %}
+        {% set source_lines = text|replace({'\r\n': '\n', '\r': '\n'})|split('\n') %}
+        <div class="profile-hero__sources">
+            <span class="profile-hero__sources-label">Sources</span>
+            <ul class="profile-hero__sources-list">
+                {% for line in source_lines %}
+                    {% if line|trim is not empty %}
+                        {% set parts = line|split('|') %}
+                        <li class="profile-hero__sources-item">
+                            {% if parts[1] is defined and parts[1]|trim is not empty %}
+                                <a href="{{ parts[1]|trim }}" target="_blank" rel="noopener noreferrer">{{ parts[0]|trim }}</a>
+                            {% else %}
+                                {{ parts[0]|trim }}
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
 {% block title %}{{ personnalite.fullName }} | Hisse ton Drapeau{% endblock %}
 {% block meta_description %}{{ personnalite.role ?? (personnalite.fullName ~ ', l\'une des 66 personnalités béninoises de la campagne Hisse ton Drapeau.') }}{% endblock %}
 {% block og_url %}{{ url('app_personnalites_show', { slug: personnalite.slug }) }}{% endblock %}
@@ -29,97 +117,120 @@
             <div class="profile-hero__info-inner">
                 <a href="{{ path('app_personnalites_index') }}" class="profile-hero__back">&larr; 66 visages</a>
 
-                <h1 class="profile-hero__name">
-                    {% if personnalite.firstName %}<span>{{ personnalite.firstName }}</span>{% endif %}
-                    <span>{{ personnalite.lastName }}</span>
-                </h1>
+                {% set fongbe_enabled = personnalite.id == 30 %}
 
-                {% if personnalite.editorialEnabled %}
-                    <div class="profile-hero__bio">
-                        {% if personnalite.parcours %}
-                            {{ local.editorial_block('Parcours', personnalite.parcours) }}
-                        {% elseif personnalite.role %}
-                            <section class="profile-hero__block">
-                                <p>{{ personnalite.role }}</p>
-                            </section>
-                        {% endif %}
+                {% if fongbe_enabled %}
+                    {% set fr_bio = {
+                        editorialEnabled: personnalite.editorialEnabled,
+                        role: personnalite.role,
+                        parcours: personnalite.parcours,
+                        contributionBenin: personnalite.contributionBenin,
+                        rayonnement: personnalite.rayonnement,
+                        actualiteDate: personnalite.actualiteDate,
+                        actualiteText: personnalite.actualiteText,
+                        actualiteUrl: personnalite.actualiteUrl,
+                    } %}
+                    {% set fon_bio = fr_bio|merge({
+                        role: personnalite.roleFongbe ?: fr_bio.role,
+                        parcours: personnalite.parcoursFongbe ?: fr_bio.parcours,
+                        contributionBenin: personnalite.contributionBeninFongbe ?: fr_bio.contributionBenin,
+                        rayonnement: personnalite.rayonnementFongbe ?: fr_bio.rayonnement,
+                        actualiteText: personnalite.actualiteTextFongbe ?: fr_bio.actualiteText,
+                    }) %}
 
-                        {{ local.editorial_block('Contribution au Bénin', personnalite.contributionBenin) }}
-                        {{ local.editorial_block('Rayonnement', personnalite.rayonnement) }}
+                    <div data-controller="translate">
+                        <h1 class="profile-hero__name" data-translate-target="fr">
+                            {% if personnalite.firstName %}<span>{{ personnalite.firstName }}</span>{% endif %}
+                            <span>{{ personnalite.lastName }}</span>
+                        </h1>
+                        <h1 class="profile-hero__name" data-translate-target="fon" lang="fon" hidden>
+                            {% if personnalite.firstNameFongbe ?: personnalite.firstName %}<span>{{ personnalite.firstNameFongbe ?: personnalite.firstName }}</span>{% endif %}
+                            <span>{{ personnalite.lastNameFongbe ?: personnalite.lastName }}</span>
+                        </h1>
 
-                        {% if personnalite.actualiteText %}
-                            <section class="profile-hero__block profile-hero__actualite">
-                                <h2 class="profile-hero__block-title">Actualité</h2>
-                                {% if personnalite.actualiteDate %}
-                                    <time class="profile-hero__actualite-date" datetime="{{ personnalite.actualiteDate|date('Y-m-d') }}">{{ personnalite.actualiteDate|date('d/m/Y') }}</time>
-                                {% endif %}
-                                <p>{{ personnalite.actualiteText }}</p>
-                                {% if personnalite.actualiteUrl %}
-                                    <a class="profile-hero__actualite-link" href="{{ personnalite.actualiteUrl }}" target="_blank" rel="noopener noreferrer">Lire la suite &rarr;</a>
-                                {% endif %}
-                            </section>
-                        {% endif %}
+                        <div class="profile-hero__translate">
+                            <button type="button" class="profile-hero__translate-btn" data-action="translate#toggle" data-translate-target="button">
+                                <span data-translate-target="label">Lire en fongbe</span>
+                            </button>
+
+                            <div data-translate-target="fr">{{ local.bio_section(fr_bio) }}</div>
+                            <div data-translate-target="fon" lang="fon" hidden>{{ local.bio_section(fon_bio) }}</div>
+
+                            {% if personnalite.wikipediaUrl %}
+                                <a class="profile-hero__wikipedia" href="{{ personnalite.wikipediaUrl }}" target="_blank" rel="noopener noreferrer">
+                                    Voir sur Wikipédia &rarr;
+                                </a>
+                            {% endif %}
+
+                            <div data-translate-target="fr">{{ local.achievements_list(personnalite.achievements) }}</div>
+                            <div data-translate-target="fon" lang="fon" hidden>{{ local.achievements_list(personnalite.achievementsFongbe ?: personnalite.achievements) }}</div>
+
+                            {% if personnalite.editorialEnabled and (personnalite.sources or personnalite.sourcesFongbe) %}
+                                <div data-translate-target="fr">{{ local.sources_list(personnalite.sources) }}</div>
+                                <div data-translate-target="fon" lang="fon" hidden>{{ local.sources_list(personnalite.sourcesFongbe ?: personnalite.sources) }}</div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% else %}
-                    {% if personnalite.parcours %}
-                        <div class="profile-hero__bio">
-                            {% set paragraphs = personnalite.parcours|replace({'\r\n': '\n', '\r': '\n'})|split('\n\n') %}
-                            {% for paragraph in paragraphs %}
-                                {% if paragraph|trim is not empty %}
-                                    <p>{{ paragraph|trim|raw }}</p>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% elseif personnalite.role %}
-                        <div class="profile-hero__bio">
-                            <p>{{ personnalite.role }}</p>
-                        </div>
-                    {% endif %}
-                {% endif %}
+                    <h1 class="profile-hero__name">
+                        {% if personnalite.firstName %}<span>{{ personnalite.firstName }}</span>{% endif %}
+                        <span>{{ personnalite.lastName }}</span>
+                    </h1>
 
-                {% if personnalite.wikipediaUrl %}
-                    <a class="profile-hero__wikipedia" href="{{ personnalite.wikipediaUrl }}" target="_blank" rel="noopener noreferrer">
-                        Voir sur Wikipédia &rarr;
-                    </a>
-                {% endif %}
-
-                {% if personnalite.achievements %}
-                    {% set achievement_lines = personnalite.achievements|replace({'\r\n': '\n', '\r': '\n'})|split('\n')|slice(0, 3) %}
-                    <ul class="profile-hero__achievements">
-                        {% for line in achievement_lines %}
-                            {% if line|trim is not empty %}
-                                {% set parts = line|split('|') %}
-                                <li class="profile-hero__achievement">
-                                    {% if parts[1] is defined and parts[1]|trim is not empty %}
-                                        <a href="{{ parts[1]|trim }}" target="_blank" rel="noopener noreferrer">{{ parts[0]|trim }}</a>
-                                    {% else %}
-                                        {{ parts[0]|trim }}
-                                    {% endif %}
-                                </li>
+                    {% if personnalite.editorialEnabled %}
+                        <div class="profile-hero__bio">
+                            {% if personnalite.parcours %}
+                                {{ local.editorial_block('Parcours', personnalite.parcours) }}
+                            {% elseif personnalite.role %}
+                                <section class="profile-hero__block">
+                                    <p>{{ personnalite.role }}</p>
+                                </section>
                             {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
 
-                {% if personnalite.editorialEnabled and personnalite.sources %}
-                    {% set source_lines = personnalite.sources|replace({'\r\n': '\n', '\r': '\n'})|split('\n') %}
-                    <div class="profile-hero__sources">
-                        <span class="profile-hero__sources-label">Sources</span>
-                        <ul class="profile-hero__sources-list">
-                            {% for line in source_lines %}
-                                {% if line|trim is not empty %}
-                                    {% set parts = line|split('|') %}
-                                    <li class="profile-hero__sources-item">
-                                        {% if parts[1] is defined and parts[1]|trim is not empty %}
-                                            <a href="{{ parts[1]|trim }}" target="_blank" rel="noopener noreferrer">{{ parts[0]|trim }}</a>
-                                        {% else %}
-                                            {{ parts[0]|trim }}
-                                        {% endif %}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
+                            {{ local.editorial_block('Contribution au Bénin', personnalite.contributionBenin) }}
+                            {{ local.editorial_block('Rayonnement', personnalite.rayonnement) }}
+
+                            {% if personnalite.actualiteText %}
+                                <section class="profile-hero__block profile-hero__actualite">
+                                    <h2 class="profile-hero__block-title">Actualité</h2>
+                                    {% if personnalite.actualiteDate %}
+                                        <time class="profile-hero__actualite-date" datetime="{{ personnalite.actualiteDate|date('Y-m-d') }}">{{ personnalite.actualiteDate|date('d/m/Y') }}</time>
+                                    {% endif %}
+                                    <p>{{ personnalite.actualiteText }}</p>
+                                    {% if personnalite.actualiteUrl %}
+                                        <a class="profile-hero__actualite-link" href="{{ personnalite.actualiteUrl }}" target="_blank" rel="noopener noreferrer">Lire la suite &rarr;</a>
+                                    {% endif %}
+                                </section>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% if personnalite.parcours %}
+                            <div class="profile-hero__bio">
+                                {% set paragraphs = personnalite.parcours|replace({'\r\n': '\n', '\r': '\n'})|split('\n\n') %}
+                                {% for paragraph in paragraphs %}
+                                    {% if paragraph|trim is not empty %}
+                                        <p>{{ paragraph|trim|raw }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% elseif personnalite.role %}
+                            <div class="profile-hero__bio">
+                                <p>{{ personnalite.role }}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if personnalite.wikipediaUrl %}
+                        <a class="profile-hero__wikipedia" href="{{ personnalite.wikipediaUrl }}" target="_blank" rel="noopener noreferrer">
+                            Voir sur Wikipédia &rarr;
+                        </a>
+                    {% endif %}
+
+                    {{ local.achievements_list(personnalite.achievements) }}
+
+                    {% if personnalite.editorialEnabled %}
+                        {{ local.sources_list(personnalite.sources) }}
+                    {% endif %}
                 {% endif %}
 
                 <div class="profile-hero__share" data-controller="share">

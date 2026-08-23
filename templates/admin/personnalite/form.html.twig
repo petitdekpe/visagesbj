@@ -113,6 +113,72 @@
                     {{ form_errors(form.sources) }}
                 </div>
 
+                <p class="admin-form__section-label">Traduction fongbe (optionnel)</p>
+                <p>
+                    Utilisée uniquement sur les fiches où le bouton de bascule FR/fongbe est activé
+                    dans le code (actuellement Fabroni Bill Yoclounon). Laisser vide pour retomber
+                    sur le texte français correspondant.
+                </p>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.firstNameFongbe) }}
+                    {{ form_widget(form.firstNameFongbe) }}
+                    {{ form_help(form.firstNameFongbe) }}
+                    {{ form_errors(form.firstNameFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.lastNameFongbe) }}
+                    {{ form_widget(form.lastNameFongbe) }}
+                    {{ form_help(form.lastNameFongbe) }}
+                    {{ form_errors(form.lastNameFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.roleFongbe) }}
+                    {{ form_widget(form.roleFongbe) }}
+                    {{ form_help(form.roleFongbe) }}
+                    {{ form_errors(form.roleFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.parcoursFongbe) }}
+                    {{ form_widget(form.parcoursFongbe) }}
+                    {{ form_help(form.parcoursFongbe) }}
+                    {{ form_errors(form.parcoursFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.contributionBeninFongbe) }}
+                    {{ form_widget(form.contributionBeninFongbe) }}
+                    {{ form_errors(form.contributionBeninFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.rayonnementFongbe) }}
+                    {{ form_widget(form.rayonnementFongbe) }}
+                    {{ form_errors(form.rayonnementFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.actualiteTextFongbe) }}
+                    {{ form_widget(form.actualiteTextFongbe) }}
+                    {{ form_errors(form.actualiteTextFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.achievementsFongbe) }}
+                    {{ form_widget(form.achievementsFongbe) }}
+                    {{ form_help(form.achievementsFongbe) }}
+                    {{ form_errors(form.achievementsFongbe) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.sourcesFongbe) }}
+                    {{ form_widget(form.sourcesFongbe) }}
+                    {{ form_errors(form.sourcesFongbe) }}
+                </div>
+
                 <div class="admin-form__field">
                     {{ form_label(form.position) }}
                     {{ form_widget(form.position) }}
