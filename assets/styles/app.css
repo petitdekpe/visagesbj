@@ -1528,14 +1528,23 @@ a.hero__tile:focus-visible {
     gap: var(--space-24);
 }
 
-.admin-bar__links a {
+.admin-bar__links a,
+.admin-bar__logout {
     color: rgba(255, 255, 255, .8);
     font-family: var(--font-heading);
     font-weight: 600;
     font-size: 14px;
 }
 
-.admin-bar__links a:hover {
+.admin-bar__logout {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.admin-bar__links a:hover,
+.admin-bar__logout:hover {
     color: var(--color-yellow);
 }
 
@@ -1617,6 +1626,39 @@ a.hero__tile:focus-visible {
     border-radius: var(--radius-md);
     color: var(--color-gray-600);
     font-size: 14px;
+}
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-16);
+    margin-top: var(--space-24);
+}
+
+.admin-pagination__btn {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 13px;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--space-8) var(--space-16);
+    cursor: pointer;
+}
+
+.admin-pagination__btn:hover:not(:disabled) {
+    background: var(--color-gray-100);
+}
+
+.admin-pagination__btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.admin-pagination__info {
+    font-size: 13px;
+    color: var(--color-gray-600);
 }
 
 .admin-table {
@@ -1842,6 +1884,8 @@ a.hero__tile:focus-visible {
 }
 
 .admin-form__field input[type="text"],
+.admin-form__field input[type="email"],
+.admin-form__field input[type="tel"],
 .admin-form__field input[type="number"],
 .admin-form__field input[type="password"],
 .admin-form__field select,
@@ -1899,6 +1943,27 @@ a.hero__tile:focus-visible {
 
 .admin-login__card .admin-form {
     max-width: none;
+}
+
+.admin-login__separator {
+    text-align: center;
+    color: var(--color-gray-600);
+    font-size: 13px;
+    margin: var(--space-24) 0;
+}
+
+.admin-login__google {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: var(--color-white);
+    border-color: var(--color-gray-300);
+    color: var(--color-black);
+    text-decoration: none;
+}
+
+.admin-login__google:hover {
+    background: var(--color-gray-100);
 }
 
 /* Audio consent player */

@@ -22,7 +22,7 @@
                 (ajoute <code>--dry-run</code> pour prévisualiser sans rien modifier).
             </p>
 
-            <div class="admin-table-wrap" data-controller="admin-reorder admin-personnalite-search">
+            <div class="admin-table-wrap" data-controller="admin-reorder admin-personnalite-search" data-admin-personnalite-search-per-page-value="10">
                 <div class="admin-table-toolbar">
                     <input
                         type="search"
@@ -108,6 +108,12 @@
                 <p class="admin-table__empty" data-admin-personnalite-search-target="empty" hidden>
                     Aucune personnalité ne correspond à cette recherche.
                 </p>
+
+                <nav class="admin-pagination" data-admin-personnalite-search-target="pagination" aria-label="Pagination">
+                    <button type="button" class="admin-pagination__btn" data-admin-personnalite-search-target="prevButton" data-action="admin-personnalite-search#prevPage">&larr; Précédent</button>
+                    <span class="admin-pagination__info" data-admin-personnalite-search-target="pageInfo"></span>
+                    <button type="button" class="admin-pagination__btn" data-admin-personnalite-search-target="nextButton" data-action="admin-personnalite-search#nextPage">Suivant &rarr;</button>
+                </nav>
             </div>
         </section>
     </div>

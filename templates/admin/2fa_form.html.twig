@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification en deux étapes | Hisse ton Drapeau{% endblock %}
+
+{% block turbo_cache_control %}<meta name="turbo-cache-control" content="no-cache">{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="section admin-login">
+            <div class="admin-login__card">
+                <h1 class="section-title">Vérification en deux étapes</h1>
+
+                {% if authenticationError %}
+                    <p class="admin-alert admin-alert--error">{{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}</p>
+                {% endif %}
+
+                <p>Entrez le code généré par votre application d'authentification (Google Authenticator ou équivalent).</p>
+
+                <form method="post" action="{{ checkPathUrl ? checkPathUrl : path(checkPathRoute) }}" class="admin-form">
+                    <div class="admin-form__field">
+                        <label for="_auth_code">Code à 6 chiffres</label>
+                        <input
+                            id="_auth_code"
+                            type="text"
+                            name="{{ authCodeParameterName }}"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            autocomplete="one-time-code"
+                            autofocus
+                            required
+                        >
+                    </div>
+
+                    {% if displayTrustedOption %}
+                        <div class="admin-form__field admin-form__field--checkbox">
+                            <label for="_trusted">
+                                <input id="_trusted" type="checkbox" name="{{ trustedParameterName }}">
+                                Faire confiance à cet appareil
+                            </label>
+                        </div>
+                    {% endif %}
+
+                    {% if isCsrfProtectionEnabled %}
+                        <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+                    {% endif %}
+
+                    <button type="submit" class="btn btn--primary">Valider</button>
+                </form>
+
+                <p><a href="{{ logoutPath }}">Annuler et se déconnecter</a></p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

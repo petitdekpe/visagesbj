@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Activer la double authentification{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section admin-form-section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Activer la double authentification</h1>
+            </div>
+
+            <p>Dans Google Authenticator (ou une application équivalente), ajoutez un compte
+                « Saisir une clé de configuration » avec :</p>
+
+            <div class="admin-form" style="max-width: 560px;">
+                <div class="admin-form__field">
+                    <label>Clé</label>
+                    <input type="text" readonly value="{{ secret }}">
+                </div>
+                <div class="admin-form__field">
+                    <label>Type</label>
+                    <input type="text" readonly value="Basé sur le temps">
+                </div>
+            </div>
+
+            <p class="admin-hint">Ou, si votre application sait scanner un lien, ouvrez : <code>{{ provisioningUri }}</code></p>
+
+            <form method="post" class="admin-form">
+                <div class="admin-form__field">
+                    <label for="code">Code à 6 chiffres généré par l'application</label>
+                    <input id="code" type="text" name="code" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autofocus required>
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Confirmer et activer</button>
+                    <a href="{{ path('admin_profile_edit') }}">Annuler</a>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}

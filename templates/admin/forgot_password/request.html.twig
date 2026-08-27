@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié | Hisse ton Drapeau{% endblock %}
+
+{% block turbo_cache_control %}<meta name="turbo-cache-control" content="no-cache">{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="section admin-login">
+            <div class="admin-login__card">
+                <h1 class="section-title">Mot de passe oublié</h1>
+
+                <p>Indiquez l'e-mail de votre compte admin, vous recevrez un lien pour choisir un
+                    nouveau mot de passe.</p>
+
+                {{ form_start(form, { attr: { class: 'admin-form' } }) }}
+                    <div class="admin-form__field">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <button type="submit" class="btn btn--primary">Envoyer le lien</button>
+                {{ form_end(form) }}
+
+                <p><a href="{{ path('admin_login') }}">&larr; Retour à la connexion</a></p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,3 @@
+admin_2fa:
+    path: /admin/2fa
+    controller: scheb_two_factor.form_controller::form

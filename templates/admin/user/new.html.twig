@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Nouveau compte{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section admin-form-section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Nouveau compte administrateur</h1>
+            </div>
+
+            {{ form_start(form, { attr: { class: 'admin-form' } }) }}
+                <div class="admin-form__field">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.plainPassword.first) }}
+                    {{ form_widget(form.plainPassword.first) }}
+                    {{ form_errors(form.plainPassword.first) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(form.plainPassword.second) }}
+                    {{ form_widget(form.plainPassword.second) }}
+                    {{ form_errors(form.plainPassword.second) }}
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Créer le compte</button>
+                    <a href="{{ path('admin_users_index') }}">Annuler</a>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    </div>
+{% endblock %}

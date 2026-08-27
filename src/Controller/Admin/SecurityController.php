@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,5 +27,22 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method is intercepted by the logout key on your firewall.');
+    }
+
+    #[Route('/admin/login/google', name: 'admin_login_google')]
+    public function connectGoogle(ClientRegistry $clientRegistry): Response
+    {
+        return $clientRegistry->getClient('google')->redirect(['email']);
+    }
+
+    /**
+     * Handled entirely by App\Security\GoogleAuthenticator — this action
+     * only exists so the redirect_route configured in knpu_oauth2_client.yaml
+     * resolves to a route.
+     */
+    #[Route('/admin/login/google/check', name: 'admin_login_google_check')]
+    public function connectGoogleCheck(): Response
+    {
+        throw new \LogicException('This route should be intercepted by GoogleAuthenticator.');
     }
 }

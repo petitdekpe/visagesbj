@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Mon profil{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section admin-form-section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Mon profil</h1>
+            </div>
+
+            {{ form_start(emailForm, { attr: { class: 'admin-form' } }) }}
+                <div class="admin-form__field">
+                    {{ form_label(emailForm.email) }}
+                    {{ form_widget(emailForm.email) }}
+                    {{ form_errors(emailForm.email) }}
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Enregistrer l'e-mail</button>
+                </div>
+            {{ form_end(emailForm) }}
+
+            <p class="admin-form__section-label">Mot de passe</p>
+
+            {{ form_start(passwordForm, { attr: { class: 'admin-form' } }) }}
+                <div class="admin-form__field">
+                    {{ form_label(passwordForm.currentPassword) }}
+                    {{ form_widget(passwordForm.currentPassword) }}
+                    {{ form_errors(passwordForm.currentPassword) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(passwordForm.plainPassword.first) }}
+                    {{ form_widget(passwordForm.plainPassword.first) }}
+                    {{ form_errors(passwordForm.plainPassword.first) }}
+                </div>
+
+                <div class="admin-form__field">
+                    {{ form_label(passwordForm.plainPassword.second) }}
+                    {{ form_widget(passwordForm.plainPassword.second) }}
+                    {{ form_errors(passwordForm.plainPassword.second) }}
+                </div>
+
+                <div class="admin-form__actions">
+                    <button type="submit" class="btn btn--primary">Changer le mot de passe</button>
+                </div>
+            {{ form_end(passwordForm) }}
+
+            <p class="admin-form__section-label">Double authentification</p>
+
+            {% if adminUser.totpSecret %}
+                <p class="admin-hint">La double authentification est activée sur votre compte.</p>
+                <form method="post" action="{{ path('admin_profile_2fa_disable') }}"
+                      data-controller="confirm" data-action="submit->confirm#check"
+                      data-confirm-message-value="Désactiver la double authentification ?"
+                      class="admin-form__actions">
+                    <input type="hidden" name="_token" value="{{ csrf_token('disable-own-2fa') }}">
+                    <button type="submit" class="btn">Désactiver la double authentification</button>
+                </form>
+            {% else %}
+                <p class="admin-hint">La double authentification n'est pas activée sur votre compte.</p>
+                <div class="admin-form__actions">
+                    <a href="{{ path('admin_profile_2fa_enable') }}" class="btn btn--primary">Activer la double authentification</a>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Utilisateurs{% endblock %}
+
+{% block body %}
+    {% include 'admin/_nav.html.twig' %}
+
+    <div class="container">
+        <section class="section">
+            <div class="section-heading">
+                <span class="section-heading__bar" aria-hidden="true"></span>
+                <h1 class="section-title">Utilisateurs ({{ adminUsers|length }})</h1>
+            </div>
+
+            <div class="admin-form__actions">
+                <a href="{{ path('admin_users_new') }}" class="btn btn--primary">+ Ajouter un compte</a>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>E-mail</th>
+                            <th>Double authentification</th>
+                            <th>Créé le</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for adminUser in adminUsers %}
+                            <tr>
+                                <td>
+                                    {{ adminUser.email }}
+                                    {% if adminUser == app.user %}<em>(vous)</em>{% endif %}
+                                </td>
+                                <td>{{ adminUser.totpSecret ? 'Activée' : 'Désactivée' }}</td>
+                                <td>{{ adminUser.createdAt|date('d/m/Y') }}</td>
+                                <td class="admin-table__actions">
+                                    <a href="{{ path('admin_users_edit', { id: adminUser.id }) }}">Modifier</a>
+                                    <form method="post" action="{{ path('admin_users_delete', { id: adminUser.id }) }}"
+                                          data-controller="confirm" data-action="submit->confirm#check"
+                                          data-confirm-message-value="Supprimer le compte {{ adminUser.email }} ?">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ adminUser.id) }}">
+                                        <button type="submit" class="admin-table__delete">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+{% endblock %}

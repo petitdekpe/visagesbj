@@ -6,6 +6,7 @@
         <meta name="description" content="{% block meta_description %}Hisse ton Drapeau réunit 66 personnalités béninoises qui incarnent la réussite et la fierté du Bénin, à l'occasion du 66ᵉ anniversaire de l'indépendance.{% endblock %}">
         <title>{% block title %}Hisse ton Drapeau | 66 visages du Bénin{% endblock %}</title>
         <link rel="icon" type="image/png" href="{{ asset('images/branding/htd_noir.png') }}">
+        {% block turbo_cache_control %}{% endblock %}
 
         {% block og_tags %}
             <meta property="og:type" content="website">

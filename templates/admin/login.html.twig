@@ -2,6 +2,10 @@
 
 {% block title %}Connexion admin | Hisse ton Drapeau{% endblock %}
 
+{# Prevents Turbo from restoring a stale cached snapshot of this form (with an
+   outdated CSRF field) on back/forward navigation. #}
+{% block turbo_cache_control %}<meta name="turbo-cache-control" content="no-cache">{% endblock %}
+
 {% block body %}
     <div class="container">
         <section class="section admin-login">
@@ -14,8 +18,8 @@
 
                 <form method="post" class="admin-form">
                     <div class="admin-form__field">
-                        <label for="username">Identifiant</label>
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+                        <label for="username">E-mail</label>
+                        <input type="email" id="username" name="_username" value="{{ last_username }}" required autofocus>
                     </div>
 
                     <div class="admin-form__field">
@@ -23,10 +27,16 @@
                         <input type="password" id="password" name="_password" required>
                     </div>
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <input type="hidden" data-controller="csrf-protection" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <button type="submit" class="btn btn--primary">Se connecter</button>
                 </form>
+
+                <p><a href="{{ path('admin_forgot_password_request') }}">Mot de passe oublié ?</a></p>
+
+                <p class="admin-login__separator">ou</p>
+
+                <a href="{{ path('admin_login_google') }}" class="btn admin-login__google">Se connecter avec Google</a>
             </div>
         </section>
     </div>
